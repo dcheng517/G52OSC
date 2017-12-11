@@ -5,7 +5,7 @@ Assignment for G52OSC - Operating Systems and Concurrency
 Task:
 Implement a program in Java for the following process scheduling algorithms. 
 
-(i)	First Come First Serve (FCFS)\n
+(i)	First Come First Serve (FCFS)
 (ii)	Shortest Job First (SJF) Preemptive Version
 (iii)	Round Robin 
 (iv)	Priority, with higher priority jobs preempting a lower priority running job
