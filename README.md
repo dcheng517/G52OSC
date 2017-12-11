@@ -1,5 +1,3 @@
-#This is daniel's branch
-
 # G52OSC
 
 Assignment for G52OSC - Operating Systems and Concurrency
