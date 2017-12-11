@@ -1,4 +1,6 @@
 import java.io.*;
+import java.lang.management.ManagementFactory;
+import com.sun.management.OperatingSystemMXBean;
 
 public class FCFS {
 	
@@ -61,6 +63,10 @@ public class FCFS {
 		long cpuTimeDifference = cputimeAfter - cputimeBefore;
 
 		System.out.println("CPU Time: " + cpuTimeDifference);
+		
+		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+		System.out.println(bean.getProcessCpuLoad());
+		System.out.println("\n" + bean.getProcessCpuTime());
 
 	}
 }
