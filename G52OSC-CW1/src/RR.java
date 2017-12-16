@@ -6,24 +6,23 @@ import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
 public class RR {
-	static Queue<Process> pq = new LinkedList<>();			//queue for RR
-	static LinkedList<Process> ps = new LinkedList<>();		//processing slots
+	static Queue<Process> pq = new LinkedList<>();			//queue for managing processes before processing
+	static LinkedList<Process> ps = new LinkedList<>();		//linkedlist to process processes
 	static Process[] pa;									//array to store all processes
 	static final int TQ = 3;								//time quantum
-	static int n=6;											//number of processes
+	static int n;											//number of processes
 	
 	
 	public static void main(String[] args) throws Exception{
 		InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
 		BufferedReader br = new BufferedReader(isr); 
 		
-		/*
+		
 		System.out.print("Enter number of processes: ");
 		n = Integer.parseInt(br.readLine()); // char to int
-		*/
 		
-		allProcesses(n);
-		printPA();
+		
+		getProcesses(n);
 		
 		long cputimeBefore = System.currentTimeMillis();
 		roundRobin(pa);
@@ -32,54 +31,39 @@ public class RR {
 
 		System.out.println("CPU Time: " + cpuTimeDifference);
 		
-		printPA();
 		printResult();
 		printAvetat();
 		printAvewt();
-		
 		printCPUInfo();
 	}
 	
+	
+	//round robin algorithm
+	//implements a per unit time cycle concept
+	//e.g., if TQ = 3, then TQ = 3 unit time cycle
 	public static void roundRobin(Process[] pa) {
 		
-		int currentTime=0;			//current time (increments one unit time at a time)
+		int currentTime=0;					//current time (increments one unit time at a time)
 		Process outStandingProcess = null;
-	//	Process workingProcess = null;
+	
+		while(allNotDone(pa)) {
 		
-		int i=0;					//RR #round
-		while(notDone(pa)) {
-		//while(currentTime<33) {
-			System.out.println("\n\nRR round "+i);
-			System.out.println("Current time: "+currentTime); 
-			
-			//add process to queue
+			//adding process to queue...
 			for(Process p:pa) {
 				//System.out.println("*This process is: "+p.name); 
-				if(p.happenedAt(currentTime) && !p.completed) {
+				if(p.arrivedAt(currentTime) && !p.completed) {
 					pq.add(p);	
-					
-					System.out.println(p.name+" is added to pq");
 				}
-			}
-			
+			}			
 			if(outStandingProcess!=null) {
 				pq.add(outStandingProcess);	
-				System.out.println("outStandingProcess "+outStandingProcess.name+" added to queue");
 				outStandingProcess = null;
 			}
 			
-			printPQ();
-			
-			//processing...
+			//processing process...
 			if(pq.peek()!=null) {
-				
-				//System.out.println("*pq.peek() is "+pq.peek().name);					
-				//workingProcess = pq.peek();	
-				//System.out.println("*workingProcess is "+workingProcess.name);
-				
-				pq.peek().processing(currentTime);	
-				pq.peek().printInfo();
-				if(pq.peek().done(currentTime)) {
+				pq.peek().processing(currentTime);		//processing head of queue
+				if(pq.peek().done(currentTime)) {		//check for completion
 					pq.remove();					
 				}
 			}			
@@ -87,31 +71,21 @@ public class RR {
 			currentTime++;
 			
 			//set out standing process (if any)
-			if(pq.peek()!=null) {
+			if(pq.peek()!=null) {	
 				
-				//new TQ round
+				//end of TQ
 				if(pq.peek().tempProcessingTime>TQ) {
-					
-					System.out.println("New UpperLimit");
-					pq.peek().tempProcessingTime=1;
+					pq.peek().tempProcessingTime=1;		//reset tempProcessingTime
 					if(!pq.peek().completed) {
-						//System.out.println(workingProcess.name+" completed is "+workingProcess.completed);
-						outStandingProcess = pq.peek();
-
-						System.out.println("*workingProcess is "+pq.peek().name);
-
-						System.out.println("*pq.peek() is "+pq.peek().name);
+						outStandingProcess = pq.peek();	//assign outstanding processes to next cycle
 						pq.remove();
-
-						System.out.println("*outStandingProcess is "+outStandingProcess.name);
 					}					
 				}
 			}
-			i++;
 		}
 	}
 	
-	public static void allProcesses(int n) throws Exception{
+	public static void getProcesses(int n) throws Exception{
 
 		InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
 		BufferedReader br = new BufferedReader(isr);
@@ -119,7 +93,23 @@ public class RR {
 		System.out.println("Enter information for each processes");
 		pa = new Process[n];
 		
+		for(int i=0; i<n; i++) {
+			int AT;	//arrival time
+			int BT;	//burst time
+			
+			//create new process
+			System.out.format("Process"+"[%d]:\n", i+1);
+			System.out.println(" Arrival time: ");
+			AT = Integer.parseInt(br.readLine()); // char to int
+			System.out.println(" Burst time: ");
+			BT = Integer.parseInt(br.readLine()); // char to int
+			Process newProcess = new Process(AT, BT);
+			pa[i] = newProcess;
+		}
 		
+		//debugging tool
+		
+		/*
 		//test case 1
 		Process p1 = new Process(5, 5);
 		Process p2 = new Process(4, 6);
@@ -134,7 +124,6 @@ public class RR {
 		pa[4] = p5;
 		pa[5] = p6;
 		
-		/*
 		//test case 2
 		Process p1 = new Process(0, 5);
 		Process p2 = new Process(1, 3);
@@ -145,24 +134,13 @@ public class RR {
 		pa[2] = p3;
 		pa[3] = p4;
 		
-		/*
-		for(int i=0; i<n; i++) {
-			int AT;	//arrival time
-			int BT;	//burst time
-			
-			//create new process
-			System.out.format("Process"+"[%d]:\n", i+1);
-			System.out.println(" Arrival time: ");
-			AT = Integer.parseInt(br.readLine()); // char to int
-			System.out.println(" Burst time: ");
-			BT = Integer.parseInt(br.readLine()); // char to int
-			Process newProcess = new Process(AT, BT);
-			processesArray[i] = newProcess;
-		}
-		
 		*/
 	}
 	
+	//debugging tool
+	//to use, uncomment Process.printInfo()
+	
+	/*
 	public static void printPA() {
 		System.out.println("*Printing processes array");
 		for(Process p: pa) {
@@ -187,8 +165,10 @@ public class RR {
 			p.printInfo();
 		}
 	}
+	*/
 	
-	public static boolean notDone(Process[] pa) {
+	//check completion status for all processes
+	public static boolean allNotDone(Process[] pa) {
 		for(Process p:pa) {
 			if(!p.completed) {
 				return true;	//if even one isn't done, return true
@@ -197,17 +177,19 @@ public class RR {
 		return false;			//else return false
 	}
 	
+	//prints result in tabular format
 	public static void printResult() {
-		System.out.print(" ____________________________________________________________________");
-		System.out.println("\n|Process\t|BURST-TIME\t|WAITING-TIME\t|TURN AROUND-TIME|");
+		System.out.print(" ________________________________________________________________________________");
+		System.out.println("\n|PROCESS\t|ARRIVAL-TIME\t|BURST-TIME\t|WAITING-TIME\t|TURN-AROUND-TIME|");
 		for(Process p:pa)
 		{
-			System.out.println("--------------------------------------------------------------------");
-			System.out.println("|" + p.name + "\t\t|" + p.BT + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t    |");
+			System.out.println("----------------------------------------------------------------------------------");
+			System.out.println("|" + p.name + "\t\t|" + p.AT + "\t\t|"+ p.BT + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t |");
 		}
-		System.out.println(" ____________________________________________________________________\n");
+		System.out.println("_________________________________________________________________________________\n");
 	}
 	
+	//prints averate turn around time
 	public static void printAvetat() {
 		float avetat = 0;
 		for(Process p:pa) {
@@ -217,6 +199,7 @@ public class RR {
 		System.out.println("Average turn around time: "+avetat);
 	}
 	
+	//prints average waiting time
 	public static void printAvewt() {
 		float avewt = 0;
 		for(Process p:pa) {
@@ -226,6 +209,7 @@ public class RR {
 		System.out.println("Average waiting time: "+avewt);
 	}
 	
+	//prints CPU Info
 	public static void printCPUInfo() {
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		System.out.println(bean.getProcessCpuLoad());

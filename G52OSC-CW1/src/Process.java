@@ -10,57 +10,56 @@ public class Process{
 	public int startTime;	//time process starts
 	public int endTime;	//time process ends
 	public int tempProcessingTime = 1;
-	Vector<Integer> workingTimeStamp; //keeps track of all working currentTime
 	
+	//constructor
+	//sets arrival time, burst time, remaining burst time, name, and start time of process
 	public Process(int AT, int BT) {
 		
 		this.AT = AT;
 		this.BT = BT;
 		remBT = BT;
 		name = "P"+i;
-		
-		workingTimeStamp = new Vector<>();
 		startTime = AT;
-		workingTimeStamp.add(startTime);
-		
 		i++;
 	}
 	
+	//debugging tool
+	//prints information of process
 	public void printInfo() {
 		System.out.print(name+":");
 		System.out.println("AT:"+AT+"|BT:"+BT+"|rem"+"BT:"+remBT);
-		//System.out.println("completed: "+completed);
-		//System.out.println("startTime: "+startTime+"endtime: "+endTime);
+		System.out.println("completed: "+completed);
+		System.out.println("startTime: "+startTime+" endtime: "+endTime);
 	}
 	
+	//returns turn around time
 	public int getTat() {
 		return endTime - startTime + 1;
 	}
 	
+	//returns waiting time
 	public int getWt() {
 		return getTat() - BT;
 		
 	}
-
-	public boolean happenedAt(int ct) {
+	
+	//checks if process' arrival time is at ct
+	public boolean arrivedAt(int ct) {
 		if(AT==ct) {
 			return true;
 		}
 		return false;
 	}
 	
-	
-	public void processing(int currentTime) {
-		System.out.println("*"+name+" entering processing...");
-		
+	//processing...
+	public void processing(int currentTime) {		
 		remBT--;		//remaining burst time reduced
 		tempProcessingTime++;
-		System.out.println("New processing time for "+name+" is "+tempProcessingTime);
 	}
 	
+	//checks for completion status of process
 	public boolean done(int ct) {
 		if(remBT==0) {
-			System.out.println(name+" completely finished processing");
 			getTat();
 			getWt();
 			completed = true;
