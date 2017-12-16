@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Process implements Comparable<Process> {
+public class Process{
 	public int AT;		//arrival time
 	public int BT;		//starting burst time
 	public int remBT;	//remaining burst time
@@ -9,7 +9,11 @@ public class Process implements Comparable<Process> {
 	public String name;	//name of process
 	private static int i=1;		//index of processes
 	public boolean completed = false;
-	Vector<Integer> workingct; //keeps track of all working currentTime
+	public int timeTaken;
+	public int startTime;
+	public int finishTime;
+	public int processingTime = 1;
+	Vector<Integer> workingTimeStamp; //keeps track of all working currentTime
 	
 	public Process(int AT, int BT) {
 		
@@ -18,26 +22,27 @@ public class Process implements Comparable<Process> {
 		remBT = BT;
 		name = "P"+i;
 		
-		workingct = new Vector<>();
-		workingct.add(AT);
+		workingTimeStamp = new Vector<>();
+		startTime = AT;
+		workingTimeStamp.add(startTime);
 		
 		i++;
 	}
 	
-	public void ProcessInfo() {
+	public void printInfo() {
 		System.out.print(name+":");
 		System.out.println("AT:"+AT+"|BT:"+BT+"|rem"+"BT:"+remBT);
-		System.out.println("completed: "+completed);
-		System.out.println("Workingct: "+workingct.toString());
+		//System.out.println("completed: "+completed);
+		//System.out.println("workingTimeStamp: "+workingTimeStamp.toString());
 	}
 	
 	public void calculateTat() {
-		tat = workingct.lastElement() - workingct.firstElement();
+		tat = workingTimeStamp.lastElement() - workingTimeStamp.firstElement();
 		System.out.println("tat for "+name+" is: "+tat);
 	}
 	
 	public void calculateWt() {
-		Vector<Integer> copyworkingct = workingct;
+		Vector<Integer> copyworkingct = workingTimeStamp;
 		int n = copyworkingct.size();
 		
 		System.out.println(name);
@@ -56,8 +61,8 @@ public class Process implements Comparable<Process> {
 		}
 	}
 
-	public boolean happenedWithin(int currentTime) {
-		if(AT<=currentTime) {
+	public boolean happenedAt(int ct) {
+		if(AT==ct) {
 			return true;
 		}
 		return false;
@@ -65,42 +70,45 @@ public class Process implements Comparable<Process> {
 	
 	//add process' starting time to workingct vector 
 	public void recordStartTime(int wt) {
-		workingct.add((Integer)wt);
+		workingTimeStamp.add((Integer)wt);
 		System.out.println("Current working time is: "+wt);
 	}
 
 	//add process' finishing time to workingct vector 
 	public void recordFinishTime(int wt) {
 		System.out.println(name+"finished processing");
-		workingct.add((Integer)wt);
+		workingTimeStamp.add((Integer)wt);
 	}
 	
-	public void processing(int wt) {
-		System.out.println("Processing "+name+" ...");
+	public void processing(int currentTime) {
+		System.out.println("*"+name+" entering processing...");
 		
-		remBT -= RR.TQ;
+		remBT--;		//remaining burst time reduced
+		timeTaken++;	//time take to process this process increased
+		//processingTime++;
+		System.out.println("New processing time for "+name+" is "+processingTime);
 		
-		//process finished in time less than TQ for particular cycle
-		if(remBT<0)
-			remBT=0;
-		ProcessInfo();
+		
+/*
+		System.out.println(name+" time Taken is "+timeTaken);
+		startTime = currentTime;
+		System.out.println(name+" start time is "+startTime);
+		finishTime = startTime + timeTaken;
+		System.out.println(name+" finish time is "+finishTime);
+		workingTimeStamp.add(startTime);
+		workingTimeStamp.add(finishTime);
+*/			
 	}
 	
 	public boolean completelyFinishProcessing() {
-		if(completed) {
-			return true;
-		}else if(remBT==0) {
+		if(remBT==0) {
 			System.out.println(name+" completely finished processing");
-			calculateTat();
-			calculateWt();
+			//calculateTat();
+			//calculateWt();
 			completed = true;
 			return true;
 		}		
 		return false;
-	}
-	
-	public int compareTo(Process p) {
-		return int.compare(p.AT, this.AT);
 	}
 }
 
