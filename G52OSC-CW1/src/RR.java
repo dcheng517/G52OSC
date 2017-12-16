@@ -78,9 +78,8 @@ public class RR {
 				//System.out.println("*workingProcess is "+workingProcess.name);
 				
 				pq.peek().processing(currentTime);	
-				pq.peek().processingTime++;	
 				pq.peek().printInfo();
-				if(pq.peek().completelyFinishProcessing()) {
+				if(pq.peek().completelyFinishProcessing(currentTime)) {
 					pq.remove();					
 				}
 			}			
@@ -91,10 +90,10 @@ public class RR {
 			if(pq.peek()!=null) {
 				
 				//new TQ round
-				if(pq.peek().processingTime>TQ) {
+				if(pq.peek().tempProcessingTime>TQ) {
 					
 					System.out.println("New UpperLimit");
-					pq.peek().processingTime=1;
+					pq.peek().tempProcessingTime=1;
 					if(!pq.peek().completed) {
 						//System.out.println(workingProcess.name+" completed is "+workingProcess.completed);
 						outStandingProcess = pq.peek();
@@ -204,7 +203,7 @@ public class RR {
 		for(Process p:pa)
 		{
 			System.out.println("--------------------------------------------------------------------");
-			System.out.println("|" + p.name + "\t\t|" + p.BT + "\t\t|" + p.wt + "\t\t|" + p.tat + "\t\t    |");
+			System.out.println("|" + p.name + "\t\t|" + p.BT + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t    |");
 		}
 		System.out.println(" ____________________________________________________________________\n");
 	}
@@ -212,7 +211,7 @@ public class RR {
 	public static void printAvetat() {
 		float avetat = 0;
 		for(Process p:pa) {
-			avetat+=p.tat;
+			avetat=p.getTat();
 		}
 		avetat = avetat/n;
 		System.out.println("Average turn around time: "+avetat);
@@ -221,7 +220,7 @@ public class RR {
 	public static void printAvewt() {
 		float avewt = 0;
 		for(Process p:pa) {
-			avewt+=p.wt;
+			avewt+=p.getWt();
 		}
 		avewt = avewt/n;
 		System.out.println("Average waiting time: "+avewt);
