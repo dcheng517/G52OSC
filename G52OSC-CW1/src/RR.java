@@ -79,7 +79,7 @@ public class RR {
 				
 				pq.peek().processing(currentTime);	
 				pq.peek().printInfo();
-				if(pq.peek().completelyFinishProcessing(currentTime)) {
+				if(pq.peek().done(currentTime)) {
 					pq.remove();					
 				}
 			}			
@@ -211,7 +211,7 @@ public class RR {
 	public static void printAvetat() {
 		float avetat = 0;
 		for(Process p:pa) {
-			avetat=p.getTat();
+			avetat+=p.getTat();
 		}
 		avetat = avetat/n;
 		System.out.println("Average turn around time: "+avetat);

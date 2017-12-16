@@ -58,7 +58,7 @@ public class Process{
 		System.out.println("New processing time for "+name+" is "+tempProcessingTime);
 	}
 	
-	public boolean completelyFinishProcessing(int ct) {
+	public boolean done(int ct) {
 		if(remBT==0) {
 			System.out.println(name+" completely finished processing");
 			getTat();
@@ -70,13 +70,3 @@ public class Process{
 		return false;
 	}
 }
-
-
-
-
-
-
-
-
-
-
