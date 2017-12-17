@@ -184,7 +184,7 @@ public class RR {
 		for(Process p:pa)
 		{
 			System.out.println("----------------------------------------------------------------------------------");
-			System.out.println("|" + p.name + "\t\t|" + p.AT + "\t\t|"+ p.BT + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t |");
+			System.out.println("|" + p.name + "\t\t|" + p.getAT() + "\t\t|"+ p.getBT() + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t |");
 		}
 		System.out.println("_________________________________________________________________________________\n");
 	}

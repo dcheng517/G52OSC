@@ -67,6 +67,7 @@ public class FCFS {
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		System.out.println(bean.getProcessCpuLoad());
 		System.out.println("\n" + bean.getProcessCpuTime());
-
 	}
+	
+	
 }

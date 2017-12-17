@@ -1,17 +1,20 @@
 import java.util.*;
 
-public class Process{
-	public int AT;		//arrival time
-	public int BT;		//starting burst time
-	public int remBT;	//remaining burst time
+public class Process implements Comparable<Process> {
 	public String name;	//name of process
-	private static int i=1;		//index of processes
-	public boolean completed = false;
-	public int startTime;	//time process starts
-	public int endTime;	//time process ends
+	
+	private int AT;					//arrival time
+	private int BT;					//starting burst time
+	private int P;					//priority
+	private int remBT;				//remaining burst time
+	private int startTime;			//time process starts
+	private int endTime;			//time process ends
+	private static int i=1;			//index of processes
+	
+	public boolean completed;
 	public int tempProcessingTime = 1;
 	
-	//constructor
+	//constructor1
 	//sets arrival time, burst time, remaining burst time, name, and start time of process
 	public Process(int AT, int BT) {
 		
@@ -20,21 +23,53 @@ public class Process{
 		remBT = BT;
 		name = "P"+i;
 		startTime = AT;
+		completed = false;
 		i++;
 	}
+	
+	//constructor2
+	//sets arrival time, burst time,, priority remaining burst time, name, and start time of process
+	public Process(int AT, int BT, int P) {
+		
+		this.AT = AT;
+		this.BT = BT;
+		this.P = P;
+		remBT = BT;
+		name = "P"+i;
+		startTime = AT;
+		completed = false;
+		i++;
+	}
+	
 	
 	//debugging tool
 	//prints information of process
 	public void printInfo() {
 		System.out.print(name+":");
 		System.out.println("AT:"+AT+"|BT:"+BT+"|rem"+"BT:"+remBT);
-		System.out.println("completed: "+completed);
+		//System.out.println("completed: "+completed);
 		System.out.println("startTime: "+startTime+" endtime: "+endTime);
+	}
+	
+	public int getAT() {
+		return AT;
+	}
+
+	public int getBT() {
+		return BT;
+	}
+	
+	public int getP() {
+		return P;
+	}
+	
+	public int getRemBT() {
+		return remBT;
 	}
 	
 	//returns turn around time
 	public int getTat() {
-		return endTime - startTime + 1;
+		return endTime - startTime;
 	}
 	
 	//returns waiting time
@@ -52,7 +87,7 @@ public class Process{
 	}
 	
 	//processing...
-	public void processing(int currentTime) {		
+	public void processing(int currentTime) {	
 		remBT--;		//remaining burst time reduced
 		tempProcessingTime++;
 	}
@@ -63,9 +98,27 @@ public class Process{
 			getTat();
 			getWt();
 			completed = true;
-			endTime = ct;
+			endTime = ct+1;
 			return true;
 		}		
 		return false;
 	}
+	
+	@Override
+	public int compareTo(Process p) {
+		int comparePriority = ((Process) p).getP();
+		return this.getP() - comparePriority;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
