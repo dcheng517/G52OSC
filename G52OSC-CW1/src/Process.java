@@ -10,7 +10,7 @@ public class Process implements Comparable<Process> {
 	private int startTime;			//time process starts
 	private int endTime;			//time process ends
 	private static int i=1;			//index of processes
-	private int option;
+	private int option=0;
 	public boolean completed;
 	public int tempProcessingTime = 1;
 	
@@ -70,6 +70,10 @@ public class Process implements Comparable<Process> {
 		return remBT;
 	}
 	
+	public int getOption() {
+		return option;
+	}
+	
 	//returns turn around time
 	public int getTat() {
 		return endTime - startTime;
@@ -78,7 +82,6 @@ public class Process implements Comparable<Process> {
 	//returns waiting time
 	public int getWt() {
 		return getTat() - BT;
-		
 	}
 	
 	//checks if process' arrival time is at ct
@@ -90,9 +93,10 @@ public class Process implements Comparable<Process> {
 	}
 	
 	//processing...
-	public void processing(int currentTime) {	
-		remBT--;		//remaining burst time reduced
-		tempProcessingTime++;
+	public void processing() {	
+		//System.out.println(name+" is processing...");
+		remBT--;				//remaining burst time reduced
+		tempProcessingTime++;	//temporary processing time (useful only for round robin algo
 	}
 	
 	//checks for completion status of process
