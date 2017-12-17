@@ -10,7 +10,7 @@ public class Process implements Comparable<Process> {
 	private int startTime;			//time process starts
 	private int endTime;			//time process ends
 	private static int i=1;			//index of processes
-	
+	private int option;
 	public boolean completed;
 	public int tempProcessingTime = 1;
 	
@@ -24,6 +24,8 @@ public class Process implements Comparable<Process> {
 		name = "P"+i;
 		startTime = AT;
 		completed = false;
+		
+		option = 0;		//compareTo() compares with remaining burst time
 		i++;
 	}
 	
@@ -38,6 +40,7 @@ public class Process implements Comparable<Process> {
 		name = "P"+i;
 		startTime = AT;
 		completed = false;
+		option = 1;			//compareTo() compares with priority
 		i++;
 	}
 	
@@ -106,10 +109,14 @@ public class Process implements Comparable<Process> {
 	
 	@Override
 	public int compareTo(Process p) {
-		int comparePriority = ((Process) p).getP();
-		return this.getP() - comparePriority;
+		if(option==1) {
+			int comparePriority = ((Process) p).getP();
+			return this.getP() - comparePriority;
+		}else {
+			int compareRemBT = ((Process) p).getRemBT();
+			return this.getRemBT() - compareRemBT;
+		}
 	}
-	
 }
 
 

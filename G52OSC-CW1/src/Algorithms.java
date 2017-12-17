@@ -5,71 +5,16 @@ import java.lang.management.ManagementFactory;
 import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
-public class PrioSched {
-	static SortedSet<Process>  ps = new TreeSet<>();					//sortedset for managing processes before processing
-	static LinkedList<Process> pl = new LinkedList<>();					//linkedlist to process processes
-	static ArrayList<Process> pa = new ArrayList<>();					//array to store all processes
-	static int n;
+public class Algorithms {
 	
-	public static void main(String[] args) throws Exception{
-		InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
-		BufferedReader br = new BufferedReader(isr); 
-		
-		/*
-		System.out.print("Enter number of processes: ");
-		n = Integer.parseInt(br.readLine()); // char to int
-		*/
-		
-		getProcesses();
-		
-		long cputimeBefore = System.currentTimeMillis();
-		priorityScheduling(pa);
-		long cputimeAfter = System.currentTimeMillis();
-		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-		
-		printResult();
-		printAvetat();
-		printAvewt();
-		printCPUInfo();
-	}
-	
-	
-	//priorityScheduling algorithm
-	public static void priorityScheduling(ArrayList<Process> pa) {
-		
-		int currentTime = 0;					//current time (increments one unit time at a time)
-		
-		while(allNotDone(pa)) {
-			
-			//adding process to sortedset...
-			for(Process p:pa) {
-				if(p.arrivedAt(currentTime) && !p.completed) {
-					ps.add(p);
-				}
-			}
-			
-			printPS();
-			
-			//processing first element in ps, ie element of highest priority
-			if(!ps.isEmpty()) {
-				ps.first().processing(currentTime);
-				if(ps.first().done(currentTime)) {
-					ps.remove(ps.first());
-				}
-			}	
-			currentTime++;
-		}	
-	}
-	
+	//get process' details from users
 	public static void getProcesses() throws Exception{
 
 		InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
 		BufferedReader br = new BufferedReader(isr);
 		
 		System.out.println("Enter information for each processes:");
-		
+		/*
 		for(int i=0; i<n; i++) {
 			int AT;	//arrival time
 			int BT;	//burst time
@@ -90,21 +35,21 @@ public class PrioSched {
 			Process newProcess = new Process(AT, BT, P);
 			pa.add(newProcess);
 		}
-		
+		*/
 		
 		//debugging tool
 		
 		
 		//test case 1
-		Process p1 = new Process(0, 5, 3);
-		Process p2 = new Process(2, 6, 1);
-		Process p3 = new Process(3, 3, 2);
-	//	Process p4 = new Process(0, 3, 2);
+		Process p1 = new Process(0, 7);
+		Process p2 = new Process(2, 4);
+		Process p3 = new Process(4, 1);
+		Process p4 = new Process(5, 4);
 	//	Process p5 = new Process(9, 16, 4);
 		pa.add(p1);
 		pa.add(p2);
 		pa.add(p3);
-	//	pa.add(p4);
+		pa.add(p4);
 	//	pa.add(p5);
 		
 		/*
@@ -123,12 +68,18 @@ public class PrioSched {
 	//debugging tool
 	//to use, uncomment Process.printInfo()
 	
-	public static void printPS() {
+	public static void printPS(int ct) {
 		Iterator<Process> psi = ps.iterator();
+		System.out.print(ct+":\t");
+		if(psi.hasNext()) {
 			while(psi.hasNext()) {
 				System.out.print(psi.next().name+"|");
 			}
 			System.out.println("");
+		}else {
+			System.out.println("Set is empty");
+		}
+		
 	}
 	
 	/*
@@ -165,11 +116,11 @@ public class PrioSched {
 	//prints result in tabular format
 	public static void printResult() {
 		System.out.print(" ________________________________________________________________________________________________");
-		System.out.println("\n|PROCESS\t|ARRIVAL-TIME\t|BURST-TIME\t|PRIORITY\t|WAITING-TIME\t|TURN-AROUND-TIME|");
+		System.out.println("\n|PROCESS\t|ARRIVAL-TIME\t|BURST-TIME\t||WAITING-TIME\t|TURN-AROUND-TIME|");
 		for(Process p:pa)
 		{
 			System.out.println("-------------------------------------------------------------------------------------------------");
-			System.out.println("|" + p.name + "\t\t|" + p.getAT() + "\t\t|"+ p.getBT() + "\t\t|"+ p.getP() + "\t\t|" + p.getWt() + "\t\t|" + p.getTat() + "\t\t |");
+			System.out.println("|" + p.name + "\t\t|" + p.getAT() + "\t\t|"+ p.getBT() + "\t\t|"+ p.getWt() + "\t\t|" + p.getTat() + "\t\t |");
 		}
 		System.out.println("_________________________________________________________________________________________________\n");
 	}

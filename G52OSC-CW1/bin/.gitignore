@@ -2,6 +2,10 @@
 /PreSJF.class
 /PrioSched.class
 /Process.class
+/ProcessingAlgorithm.class
 /RR.class
 /test.class
-/ProcessingAlgorithm.class
+/Comparator.class
+/PriorityComparator.class
+/RemBTComparator.class
+/Algorithms.class
