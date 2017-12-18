@@ -8,19 +8,20 @@ public class FCFS extends ProcessingAlgorithms{
 										
 	public FCFS(ArrayList<Process> a) throws Exception{
 		pa = a;
+		try {
+			long cputimeBefore = System.currentTimeMillis();
+			FirstComeFirstServe(pa);
+			long cputimeAfter = System.currentTimeMillis();
+			printCPUTime(cputimeBefore, cputimeAfter);
+			printCPUInfo();
+		}catch(IndexOutOfBoundsException e) {
+			AlertBox.handle();
+		}
 		
-		long cputimeBefore = System.currentTimeMillis();
-		FirstComeFirstServe(pa);
-		long cputimeAfter = System.currentTimeMillis();
-		printCPUTime(cputimeBefore, cputimeAfter);
-		printResult(pa);
-		printCPUInfo();
 	}
 	
 	public static void FirstComeFirstServe(ArrayList<Process> a) {
 		
-		System.out.println("Inside FCFS.java");
-		printPA(pa);
 		int currentTime = 0;
 		boolean processDone;
 			for(Process p:pa) {

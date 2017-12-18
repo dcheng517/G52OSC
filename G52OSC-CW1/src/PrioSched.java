@@ -9,26 +9,21 @@ public class PrioSched extends ProcessingAlgorithms{
 	public PrioSched(ArrayList<Process> a) throws Exception{
 		
 		pa = a;
-		
-		long cputimeBefore = System.currentTimeMillis();
-		priorityScheduling(pa);
-		long cputimeAfter = System.currentTimeMillis();
-		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-		printCPUTime(cputimeBefore, cputimeAfter);
-		printResult(pa);
-		getPerformance();
-		printCPUInfo();
+		try {
+			long cputimeBefore = System.currentTimeMillis();
+			priorityScheduling(pa);
+			long cputimeAfter = System.currentTimeMillis();
+			printCPUTime(cputimeBefore, cputimeAfter);
+			printCPUInfo();
+		}catch(IndexOutOfBoundsException e) {
+			AlertBox.handle();
+		}
 	}
 	
-	
-	//priorityScheduling algorithm
 	public static void priorityScheduling(ArrayList<Process> pa) {
-		
-		//sortedset for managing processes before processing
-		SortedSet<Process> ps = new TreeSet<>();	
-		
-		//current time (increments one unit time at a time)
-		int currentTime = 0;					
+			
+		SortedSet<Process> ps = new TreeSet<>();	//sortedset for managing processes before processing
+		int currentTime = 0;						//current time (increments one unit time at a time)		
 		
 		while(allNotDone(pa)) {
 			
@@ -39,8 +34,6 @@ public class PrioSched extends ProcessingAlgorithms{
 				}
 			}
 			
-			//super.printPS();
-			
 			//processing first element in ps, ie element of highest priority
 			if(!ps.isEmpty()) {
 				ps.first().processing();
@@ -50,37 +43,5 @@ public class PrioSched extends ProcessingAlgorithms{
 			}	
 			currentTime++;
 		}	
-	}
-		
-	public static Process[] getProcesses() throws Exception{
-		Process[] pa;									//array to store all processes
-		
-		InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
-		BufferedReader br = new BufferedReader(isr);
-		
-		System.out.print("Enter number of processes: ");
-		int n = Integer.parseInt(br.readLine()); // char to int
-		
-		pa = new Process[n];
-		System.out.println("Enter information for each processes");
-		
-		for(int i=0; i<n; i++) {
-			int AT;	//arrival time
-			int BT;	//burst time
-			int P;	//priority
-			
-			//create new process
-			System.out.format("Process"+"[%d]:\n", i+1);
-			System.out.print(" Arrival time: ");
-			AT = Integer.parseInt(br.readLine()); // char to int
-			System.out.print(" Burst time: ");
-			BT = Integer.parseInt(br.readLine()); // char to int
-			System.out.print(" Priority: ");
-			P = Integer.parseInt(br.readLine()); // char to int
-			Process newProcess = new Process(AT, BT, P);
-			pa[i] = newProcess;
-		}
-		
-		return pa;
 	}
 }

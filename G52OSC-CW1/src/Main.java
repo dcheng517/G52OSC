@@ -19,7 +19,7 @@ public class Main extends Application{
 	public static final int N = 10;
 	float avewt;
 	float avetat;
-	Algorithm runAlgo;
+	Request newRequest;
 	
 	public static void main(String[] args) {		
 		launch();
@@ -34,27 +34,21 @@ public class Main extends Application{
 		pane.setVgap(10);
 		pane.setPadding(new Insets(10, 10, 10, 10));
 		
+		//set pane column width
 		ColumnConstraints column1 = new ColumnConstraints();
-	    column1.setPercentWidth(16.66666);
-		
+	    column1.setPercentWidth(16.66666);		
 	    ColumnConstraints column2 = new ColumnConstraints();
-	    column2.setPercentWidth(16.66666);
-	   
+	    column2.setPercentWidth(16.66666);	   
 	    ColumnConstraints column3 = new ColumnConstraints();
-	    column3.setPercentWidth(16.66666);
-		
+	    column3.setPercentWidth(16.66666);		
 	    ColumnConstraints column4 = new ColumnConstraints();
-	    column4.setPercentWidth(16.66666);
-	  
+	    column4.setPercentWidth(16.66666);	  
 	    ColumnConstraints column5 = new ColumnConstraints();
-	    column5.setPercentWidth(16.66666);
-		
+	    column5.setPercentWidth(16.66666);		
 	    ColumnConstraints column6 = new ColumnConstraints();
 	    column6.setPercentWidth(16.66666);
-
 	    pane.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6); 
 
-	    
 	    Label[] ATs = new Label[N];
 	    TextField[] inputATs = new TextField[N];
 	    Label[] BTs = new Label[N];
@@ -62,10 +56,7 @@ public class Main extends Application{
 	    Label[] Ps = new Label[N];
 	    TextField[] inputPs = new TextField[N];
 	    
-	    Label ProcessInfo = new Label("1. Insert info of all processes");
-		pane.setConstraints(ProcessInfo, 0, 0, 2, 1);
-	    pane.getChildren().add(ProcessInfo);
-	    
+	    //display user input section
 	    for(int i=0; i<N; i++) {
 	    	
 	    	//Arrival Time
@@ -89,61 +80,93 @@ public class Main extends Application{
 			pane.getChildren().addAll(ATs[i], inputATs[i], BTs[i], inputBTs[i], Ps[i], inputPs[i]);
 	    }
 	    
-	    //Average waiting Time
-    	Label avewtLabel = new Label("Average waiting Time: ");
+	    
+	    //display calculated average waiting Time
+    		Label avewtLabel = new Label("Average waiting Time: ");
 			pane.setConstraints(avewtLabel, 1, 13, 2, 1);
 			TextField avewtDisplay = new TextField();
-			avewtDisplay.setText(Float.toString(avewt));
+			avewtDisplay.setEditable(false);
 			pane.setConstraints(avewtDisplay, 3, 13, 1, 1);
 	    
-		//Average turn around Time
-	    Label avetatLabel = new Label("Average turn around time: ");
+		//display calculated turn around Time
+			Label avetatLabel = new Label("Average turn around time: ");
 			pane.setConstraints(avetatLabel, 1, 14, 2, 1);
 			TextField avetatDisplay = new TextField();
-			avewtDisplay.setText(Float.toString(avetat));
+			avetatDisplay.setEditable(false);
 			pane.setConstraints(avetatDisplay, 3, 14, 1, 1);	
 		
 		pane.getChildren().addAll(avewtLabel, avewtDisplay, avetatLabel, avetatDisplay);
 		
-	    //FCFS choosed
-	    Button FCFS = new Button("FCFS");
-	    FCFS.setOnAction(e->{
-			runAlgo = new Algorithm(1, inputATs, inputBTs, inputPs);	
-			avewt = runAlgo.getAvewt();
-			avetat = runAlgo.getAvetat();
-			avewtDisplay.setText(Float.toString(avewt));
-			avetatDisplay.setText(Float.toString(avetat));
-		});
-		pane.setConstraints(FCFS, 0, 13);
 		
-		//PrioSched choosed
-	    Button PrioSched = new Button("PrioSched");
-	    PrioSched.setOnAction(e->{
-	    	runAlgo = new Algorithm(2, inputATs, inputBTs, inputPs);
-		});
-		pane.setConstraints(PrioSched, 0, 14);
-		
-		//RR choosed
-	    Button RR = new Button("RR");
-	    RR.setOnAction(e->{
-	    	runAlgo = new Algorithm(3, inputATs, inputBTs, inputPs);
-		});
-		pane.setConstraints(RR, 0, 15);
+		//FCFS choosed
+			Button FCFS = new Button("FCFS");
+			FCFS.setOnAction(e->{
+				try {
+					newRequest = new Request(1, inputATs, inputBTs);
+					avewt = newRequest.getAvewt();
+					avetat = newRequest.getAvetat();
+					avewtDisplay.setText(Float.toString(avewt));
+					avetatDisplay.setText(Float.toString(avetat));
+				}catch(IndexOutOfBoundsException userInputError) {
+					AlertBox.handle();
+				}
+			});
+			pane.setConstraints(FCFS, 0, 13);
 		
 		//SJF choosed
-	    Button SJF = new Button("SJF");
-	    SJF.setOnAction(e->{
-	    	runAlgo = new Algorithm(4, inputATs, inputBTs, inputPs);
-		});
-		pane.setConstraints(SJF, 0, 16);
-		pane.getChildren().addAll(FCFS, PrioSched, RR, SJF);
-	    
-	
+		    Button SJF = new Button("SJF");
+		    SJF.setOnAction(e->{
+		    	try {
+		    		newRequest = new Request(2, inputATs, inputBTs);
+					avewt = newRequest.getAvewt();
+					avetat = newRequest.getAvetat();
+					avewtDisplay.setText(Float.toString(avewt));
+					avetatDisplay.setText(Float.toString(avetat));
+				}catch(Exception userInputError) {
+					userInputError.printStackTrace();
+					AlertBox.handle();
+				}
+				});
+			pane.setConstraints(SJF, 0, 14);	
 		
-    	
-			
+		//PrioSched choosed
+		    Button PrioSched = new Button("PrioSched");
+		    PrioSched.setOnAction(e->{
+		    	try {
+		    		newRequest = new Request(inputATs, inputBTs, inputPs);
+					avewt = newRequest.getAvewt();
+					avetat = newRequest.getAvetat();
+					avewtDisplay.setText(Float.toString(avewt));
+					avetatDisplay.setText(Float.toString(avetat));
+				}catch(Exception userInputError) {
+					AlertBox.handle();
+				}
+			});
+		    pane.setConstraints(PrioSched, 0, 15);
+		
+		//RR choosed
+		    Button RR = new Button("RR");
+		    RR.setOnAction(e->{
+	    		String tq = AlertBox.timeQuantum();
+	    		if(tq!=null) {
+	    			try {
+			    		newRequest = new Request(inputATs, inputBTs, tq);
+						avewt = newRequest.getAvewt();
+						avetat = newRequest.getAvetat();
+						avewtDisplay.setText(Float.toString(avewt));
+						avetatDisplay.setText(Float.toString(avetat));
+					}catch(Exception userInputError) {
+						AlertBox.handle();
+					}
+	    		}
+		    });
+			pane.setConstraints(RR, 0, 16);
+
+		pane.getChildren().addAll(FCFS, PrioSched, RR, SJF);
 		Scene scene = new Scene(pane, WIDTH, HEIGHT);
 		window.setScene(scene);
+        window.setMaximized(false);
+        window.setResizable(false);
 		window.show();
 	}
 	

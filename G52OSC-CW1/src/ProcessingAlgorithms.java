@@ -1,6 +1,3 @@
-import java.io.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
@@ -8,6 +5,7 @@ import com.sun.management.OperatingSystemMXBean;
 public class ProcessingAlgorithms {
 	static ArrayList<Process> pa;
 	
+	//prints process array in console
 	public static void printPA(ArrayList<Process> pa) {
 		System.out.println("*Printing processes array");
 		System.out.println("*Size of processes array is "+pa.size());		
@@ -26,7 +24,7 @@ public class ProcessingAlgorithms {
 		return false;			//else return false
 	}
 	
-	//prints result in tabular format for RR
+	//prints result in tabular format for RR in console
 	public static void printResult(ArrayList<Process> pa) {
 		int option = pa.get(0).getOption();
 		switch(option) {
@@ -87,19 +85,20 @@ public class ProcessingAlgorithms {
 		return avetat;
 	}
 	
-	//prints CPU time difference
+	//prints CPU time difference in console
 	public static void printCPUTime(long pre, long post) {
 		long cpuTimeDifference = pre - post;
 		System.out.println("CPU Time: " + cpuTimeDifference);
 	}
 	
-	//prints CPU Info
+	//prints CPU Info in console
 	public static void printCPUInfo() {
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		System.out.println(bean.getProcessCpuLoad());
 		System.out.println("\n" + bean.getProcessCpuTime()+"nanoseconds");
 	}
 	
+	//debugging tools
 	/*
 	public static void printPQ() {
 		System.out.println("*Printing processes queue");
