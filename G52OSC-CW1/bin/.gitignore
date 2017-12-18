@@ -1,21 +1,2 @@
-/FCFS.class
-<<<<<<< HEAD
-/Main.class
-/PrioSched.class
-/Process.class
-/ProcessingAlgorithms.class
-/RR.class
 /SJF.class
-/test.class
-=======
-/PreSJF.class
-/PrioSched.class
-/Process.class
-/ProcessingAlgorithm.class
-/RR.class
-/test.class
-/Comparator.class
-/PriorityComparator.class
-/RemBTComparator.class
-/Algorithms.class
->>>>>>> parent of 71934f7... 4 algorithm merged into program
+/FCFS.class
