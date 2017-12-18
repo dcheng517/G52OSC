@@ -14,10 +14,10 @@ public class RR extends ProcessingAlgorithms{
 		TQ = tq;
 		pa = a;
 		try {
-			long cputimeBefore = System.currentTimeMillis();
+			long cputimeBefore = System.nanoTime();
 			roundRobin(pa, TQ);
-			long cputimeAfter = System.currentTimeMillis();
-			printCPUTime(cputimeBefore, cputimeAfter);
+			long cputimeAfter = System.nanoTime();
+			calcCPUTime(cputimeBefore, cputimeAfter);
 			printResult(pa);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {

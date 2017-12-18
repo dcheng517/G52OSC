@@ -65,5 +65,6 @@ public class AlertBox {
 	     window.showAndWait();
 	     
 	     return timeQuantum;
-	}
+	}	
+	
 }

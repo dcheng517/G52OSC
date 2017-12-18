@@ -10,10 +10,10 @@ public class PrioSched extends ProcessingAlgorithms{
 		
 		pa = a;
 		try {
-			long cputimeBefore = System.currentTimeMillis();
+			long cputimeBefore = System.nanoTime();
 			priorityScheduling(pa);
-			long cputimeAfter = System.currentTimeMillis();
-			printCPUTime(cputimeBefore, cputimeAfter);
+			long cputimeAfter = System.nanoTime();
+			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {
 			AlertBox.handle();

@@ -9,10 +9,10 @@ public class FCFS extends ProcessingAlgorithms{
 	public FCFS(ArrayList<Process> a) throws Exception{
 		pa = a;
 		try {
-			long cputimeBefore = System.currentTimeMillis();
+			long cputimeBefore = System.nanoTime();
 			FirstComeFirstServe(pa);
-			long cputimeAfter = System.currentTimeMillis();
-			printCPUTime(cputimeBefore, cputimeAfter);
+			long cputimeAfter = System.nanoTime();
+			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {
 			AlertBox.handle();

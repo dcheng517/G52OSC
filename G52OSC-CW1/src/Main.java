@@ -17,9 +17,10 @@ public class Main extends Application{
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 600;
 	public static final int N = 10;
-	float avewt;
-	float avetat;
-	Request newRequest;
+	private float avewt;
+	private float avetat;
+	private long cpuTime;
+	private Request newRequest;
 	
 	public static void main(String[] args) {		
 		launch();
@@ -95,19 +96,33 @@ public class Main extends Application{
 			avetatDisplay.setEditable(false);
 			pane.setConstraints(avetatDisplay, 3, 14, 1, 1);	
 		
-		pane.getChildren().addAll(avewtLabel, avewtDisplay, avetatLabel, avetatDisplay);
+		//display cpu time	
+			Label cpuTimeLabel = new Label("Processing time in nanosec: ");
+			pane.setConstraints(cpuTimeLabel, 1, 15, 2, 1);
+			TextField cpuTimeDisplay = new TextField();
+			avetatDisplay.setEditable(false);
+			pane.setConstraints(cpuTimeDisplay, 3, 15, 1, 1);	
+		
+		
+		pane.getChildren().addAll(avewtLabel, avewtDisplay, avetatLabel, avetatDisplay, cpuTimeLabel, cpuTimeDisplay);
 		
 		
 		//FCFS choosed
 			Button FCFS = new Button("FCFS");
 			FCFS.setOnAction(e->{
 				try {
+					if(!completeInput(inputATs, inputBTs)) {
+		    			throw new Exception();
+		    		}
 					newRequest = new Request(1, inputATs, inputBTs);
 					avewt = newRequest.getAvewt();
 					avetat = newRequest.getAvetat();
+					cpuTime = newRequest.getCPUTime();
 					avewtDisplay.setText(Float.toString(avewt));
 					avetatDisplay.setText(Float.toString(avetat));
-				}catch(IndexOutOfBoundsException userInputError) {
+					cpuTimeDisplay.setText(Long.toString(cpuTime));
+				}catch(Exception userInputError) {
+					userInputError.printStackTrace();
 					AlertBox.handle();
 				}
 			});
@@ -117,28 +132,39 @@ public class Main extends Application{
 		    Button SJF = new Button("SJF");
 		    SJF.setOnAction(e->{
 		    	try {
+		    		if(!completeInput(inputATs, inputBTs)) {
+		    			throw new Exception();
+		    		}
 		    		newRequest = new Request(2, inputATs, inputBTs);
-					avewt = newRequest.getAvewt();
+		    		avewt = newRequest.getAvewt();
 					avetat = newRequest.getAvetat();
+					cpuTime = newRequest.getCPUTime();
 					avewtDisplay.setText(Float.toString(avewt));
 					avetatDisplay.setText(Float.toString(avetat));
+					cpuTimeDisplay.setText(Long.toString(cpuTime));
 				}catch(Exception userInputError) {
 					userInputError.printStackTrace();
 					AlertBox.handle();
 				}
-				});
+			});
 			pane.setConstraints(SJF, 0, 14);	
 		
 		//PrioSched choosed
 		    Button PrioSched = new Button("PrioSched");
 		    PrioSched.setOnAction(e->{
 		    	try {
+		    		if(!completeInput(inputATs, inputBTs, inputPs)) {
+		    			throw new Exception();
+		    		}
 		    		newRequest = new Request(inputATs, inputBTs, inputPs);
-					avewt = newRequest.getAvewt();
+		    		avewt = newRequest.getAvewt();
 					avetat = newRequest.getAvetat();
+					cpuTime = newRequest.getCPUTime();
 					avewtDisplay.setText(Float.toString(avewt));
 					avetatDisplay.setText(Float.toString(avetat));
+					cpuTimeDisplay.setText(Long.toString(cpuTime));
 				}catch(Exception userInputError) {
+					userInputError.printStackTrace();
 					AlertBox.handle();
 				}
 			});
@@ -150,24 +176,77 @@ public class Main extends Application{
 	    		String tq = AlertBox.timeQuantum();
 	    		if(tq!=null) {
 	    			try {
+	    				if(!completeInput(inputATs, inputBTs)) {
+			    			throw new Exception();
+			    		}
 			    		newRequest = new Request(inputATs, inputBTs, tq);
-						avewt = newRequest.getAvewt();
+			    		avewt = newRequest.getAvewt();
 						avetat = newRequest.getAvetat();
+						cpuTime = newRequest.getCPUTime();
 						avewtDisplay.setText(Float.toString(avewt));
 						avetatDisplay.setText(Float.toString(avetat));
+						cpuTimeDisplay.setText(Long.toString(cpuTime));
 					}catch(Exception userInputError) {
+						userInputError.printStackTrace();
 						AlertBox.handle();
 					}
 	    		}
 		    });
 			pane.setConstraints(RR, 0, 16);
 
+
+				
 		pane.getChildren().addAll(FCFS, PrioSched, RR, SJF);
 		Scene scene = new Scene(pane, WIDTH, HEIGHT);
 		window.setScene(scene);
         window.setMaximized(false);
         window.setResizable(false);
 		window.show();
+	}
+	
+	public boolean completeInput(TextField[] xs, TextField[] ys) {
+		int attendance;
+		String x, y;
+		
+		for(int i=0; i<xs.length; i++) {
+			attendance = 0;
+			x = xs[i].getText();
+			y = ys[i].getText();
+			
+			if(!x.isEmpty())
+				attendance+=1;
+			if(!y.isEmpty())
+				attendance+=1;
+			
+			if(attendance!=2 && attendance!=0) {
+				return false;
+			}
+		}		
+		return true;	
+	}
+	
+	public boolean completeInput(TextField[] xs, TextField[] ys, TextField[] zs) {
+		int attendance;
+		String x, y, z;
+		
+		for(int i=0; i<xs.length; i++) {
+			attendance = 0;
+			x = xs[i].getText();
+			y = ys[i].getText();
+			z = zs[i].getText();
+			
+			if(!x.isEmpty())
+				attendance+=1;
+			if(!y.isEmpty())
+				attendance+=1;
+			if(!z.isEmpty())
+				attendance+=1;
+			
+			if(attendance!=3 && attendance!=0) {
+				return false;
+			}
+		}		
+		return true;	
 	}
 	
 }

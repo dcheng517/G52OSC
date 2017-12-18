@@ -4,6 +4,7 @@ import com.sun.management.OperatingSystemMXBean;
 
 public class ProcessingAlgorithms {
 	static ArrayList<Process> pa;
+	static long cpuTimeDifference;
 	
 	//prints process array in console
 	public static void printPA(ArrayList<Process> pa) {
@@ -62,7 +63,7 @@ public class ProcessingAlgorithms {
 	}
 	
 	//returns average waiting time
-	public static float getAvewt(ArrayList<Process> pa) {
+	public static float getAvewt() {
 		float avewt = 0;
 		for(Process p:pa) {
 			avewt+=p.getWt();
@@ -73,8 +74,9 @@ public class ProcessingAlgorithms {
 		return avewt;
 	}
 	
+	
 	//returns average turn around time
-	public static float getAvetat(ArrayList<Process> pa) {
+	public static float getAvetat() {
 		float avetat = 0;
 		for(Process p:pa) {
 			avetat+=p.getTat();
@@ -85,10 +87,15 @@ public class ProcessingAlgorithms {
 		return avetat;
 	}
 	
-	//prints CPU time difference in console
-	public static void printCPUTime(long pre, long post) {
-		long cpuTimeDifference = pre - post;
+	//returns CPU time difference in console
+	public static long calcCPUTime(long pre, long post) {
+		cpuTimeDifference = post - pre;
 		System.out.println("CPU Time: " + cpuTimeDifference);
+		return cpuTimeDifference;
+	}
+	
+	public long getCPUTime() {
+		return cpuTimeDifference;
 	}
 	
 	//prints CPU Info in console

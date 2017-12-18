@@ -10,10 +10,10 @@ public class SJF extends ProcessingAlgorithms{
 	public SJF(ArrayList<Process> a) throws Exception{
 		pa = a;
 		try {
-			long cputimeBefore = System.currentTimeMillis();
+			long cputimeBefore = System.nanoTime();
 			shortestJobFirst(pa);
-			long cputimeAfter = System.currentTimeMillis();
-			printCPUTime(cputimeBefore, cputimeAfter);
+			long cputimeAfter = System.nanoTime();
+			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {
 			AlertBox.handle();
@@ -34,6 +34,11 @@ public class SJF extends ProcessingAlgorithms{
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					ps.add(p);
 				}
+				Iterator<Process> psi = ps.iterator();
+				while(psi.hasNext()) {
+					System.out.print(psi.next().name+"|");
+				}
+				System.out.println("");
 			}
 			
 			//processing first element in ps, ie element of highest priority
