@@ -6,28 +6,23 @@ import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
 public class PrioSched extends ProcessingAlgorithms{
-	static Process[] pa;					//array to store all processes
-	
-	public PrioSched() throws Exception{
+	public PrioSched(ArrayList<Process> a) throws Exception{
 		
-		pa = getProcesses();
+		pa = a;
 		
 		long cputimeBefore = System.currentTimeMillis();
 		priorityScheduling(pa);
 		long cputimeAfter = System.currentTimeMillis();
 		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-		
+		printCPUTime(cputimeBefore, cputimeAfter);
 		printResult(pa);
-		printAvetat(pa);
-		printAvewt(pa);
+		getPerformance();
 		printCPUInfo();
 	}
 	
 	
 	//priorityScheduling algorithm
-	public static void priorityScheduling(Process[] pa) {
+	public static void priorityScheduling(ArrayList<Process> pa) {
 		
 		//sortedset for managing processes before processing
 		SortedSet<Process> ps = new TreeSet<>();	

@@ -6,33 +6,23 @@ import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
 public class SJF extends ProcessingAlgorithms{
-	static Process[] pa;					//array to store all processes
-	static int n;
 	
-	public SJF() throws Exception{
-		/*
-		System.out.print("Enter number of processes: ");
-		n = Integer.parseInt(br.readLine()); // char to int
-		*/
-		
-		pa = getProcesses();
+	public SJF(ArrayList<Process> a) throws Exception{
+		pa = a;
 		
 		long cputimeBefore = System.currentTimeMillis();
 		shortestJobFirst(pa);
 		long cputimeAfter = System.currentTimeMillis();
 		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-		
+		printCPUTime(cputimeBefore, cputimeAfter);
 		printResult(pa);
-		printAvetat(pa);
-		printAvewt(pa);
+		getPerformance();
 		printCPUInfo();
 	}
 	
 	
 	//shortest job first algorithm
-	public static void shortestJobFirst(Process[] pa) {
+	public static void shortestJobFirst(ArrayList<Process> pa) {
 		SortedSet<Process>  ps = new TreeSet<>();					//sortedset for managing processes before processing
 		
 		int currentTime = 0;					//current time (increments one unit time at a time)

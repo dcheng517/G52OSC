@@ -6,24 +6,21 @@ import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
 public class RR extends ProcessingAlgorithms{
+	
 	static LinkedList<Process> ps = new LinkedList<>();		//linkedlist to process processes
-	static Process[] pa;									//array to store all processes
 	static int TQ;								//time quantum
 	
-	public RR() throws Exception{
+	public RR(ArrayList<Process> a) throws Exception{
 		
-		pa = getProcesses();
+		pa = a;
 		
 		long cputimeBefore = System.currentTimeMillis();
 		roundRobin(pa, TQ);
 		long cputimeAfter = System.currentTimeMillis();
 		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-		
+		printCPUTime(cputimeBefore, cputimeAfter);
 		printResult(pa);
-		printAvetat(pa);
-		printAvewt(pa);
+		getPerformance();
 		printCPUInfo();
 	}
 
@@ -31,7 +28,7 @@ public class RR extends ProcessingAlgorithms{
 	//round robin algorithm
 	//implements a per unit time cycle concept
 	//e.g., if TQ = 3, then TQ = 3 unit time cycle
-	public static void roundRobin(Process[] pa, int TQ) {
+	public static void roundRobin(ArrayList<Process> a, int TQ) {
 		Queue<Process> pq = new LinkedList<>();			//queue for managing processes before processing
 		int currentTime=0;								//current time (increments one unit time at a time)
 		Process outStandingProcess = null;

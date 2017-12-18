@@ -1,0 +1,31 @@
+Test case
+
+FCFS
+
+Process	Burst Time	Arrival	
+1		24			0	
+2		3			0		
+3		3			0		
+average waiting time: (0+24+27)/3 = 17
+average turnaround time: (24+27+30) = 27
+
+
+Process	Burst Time	Arrival	
+1		10			0	
+2		29			0	
+3		3			0	
+4		7			0	
+5		12			0	
+average waiting time: (0+10+39+42+49)/5 = 28
+average turnaround time: (10+39+42+49+61)/5 = 40.2
+
+
+SJF
+
+Process	Burst Time	Arrival	
+1		7			0	
+2		4			2	
+3		1			4	
+4		4			5	
+average waiting time: (9+1+0+2)/4 = 3
+average turnaround time: (16+5+1+6)/4 = 7

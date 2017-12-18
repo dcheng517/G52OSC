@@ -1,27 +1,26 @@
 import java.io.*;
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
+
 import com.sun.management.OperatingSystemMXBean;
 
 public class FCFS extends ProcessingAlgorithms{
-	
-	static Process[] pa;									//array to store all processes
-	public FCFS() throws Exception{
-		pa = getProcesses();
+										
+	public FCFS(ArrayList<Process> a) throws Exception{
+		pa = a;
 		
 		long cputimeBefore = System.currentTimeMillis();
 		FirstComeFirstServe(pa);
 		long cputimeAfter = System.currentTimeMillis();
-		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-
+		printCPUTime(cputimeBefore, cputimeAfter);
 		printResult(pa);
-		printAvetat(pa);
-		printAvewt(pa);
 		printCPUInfo();
 	}
 	
-	public static void FirstComeFirstServe(Process[] pa) {
+	public static void FirstComeFirstServe(ArrayList<Process> a) {
+		
+		System.out.println("Inside FCFS.java");
+		printPA(pa);
 		int currentTime = 0;
 		boolean processDone;
 			for(Process p:pa) {

@@ -16,6 +16,10 @@ public class Main extends Application{
 	
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 600;
+	public static final int N = 10;
+	float avewt;
+	float avetat;
+	Algorithm runAlgo;
 	
 	public static void main(String[] args) {		
 		launch();
@@ -50,19 +54,19 @@ public class Main extends Application{
 
 	    pane.getColumnConstraints().addAll(column1, column2, column3, column4, column5, column6); 
 
-	    int l = 10; 
-	    Label[] ATs = new Label[l];
-	    TextField[] inputATs = new TextField[l];
-	    Label[] BTs = new Label[l];
-	    TextField[] inputBTs = new TextField[l];
-	    Label[] Ps = new Label[l];
-	    TextField[] inputPs = new TextField[l];
+	    
+	    Label[] ATs = new Label[N];
+	    TextField[] inputATs = new TextField[N];
+	    Label[] BTs = new Label[N];
+	    TextField[] inputBTs = new TextField[N];
+	    Label[] Ps = new Label[N];
+	    TextField[] inputPs = new TextField[N];
 	    
 	    Label ProcessInfo = new Label("1. Insert info of all processes");
 		pane.setConstraints(ProcessInfo, 0, 0, 2, 1);
 	    pane.getChildren().add(ProcessInfo);
-		
-	    for(int i=0; i<l; i++) {
+	    
+	    for(int i=0; i<N; i++) {
 	    	
 	    	//Arrival Time
 	    	ATs[i] = new Label("Arrival Time: ");
@@ -84,58 +88,59 @@ public class Main extends Application{
 				
 			pane.getChildren().addAll(ATs[i], inputATs[i], BTs[i], inputBTs[i], Ps[i], inputPs[i]);
 	    }
- 
+	    
+	    //Average waiting Time
+    	Label avewtLabel = new Label("Average waiting Time: ");
+			pane.setConstraints(avewtLabel, 1, 13, 2, 1);
+			TextField avewtDisplay = new TextField();
+			avewtDisplay.setText(Float.toString(avewt));
+			pane.setConstraints(avewtDisplay, 3, 13, 1, 1);
+	    
+		//Average turn around Time
+	    Label avetatLabel = new Label("Average turn around time: ");
+			pane.setConstraints(avetatLabel, 1, 14, 2, 1);
+			TextField avetatDisplay = new TextField();
+			avewtDisplay.setText(Float.toString(avetat));
+			pane.setConstraints(avetatDisplay, 3, 14, 1, 1);	
+		
+		pane.getChildren().addAll(avewtLabel, avewtDisplay, avetatLabel, avetatDisplay);
+		
+	    //FCFS choosed
 	    Button FCFS = new Button("FCFS");
 	    FCFS.setOnAction(e->{
-			try {
-				new FCFS();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			runAlgo = new Algorithm(1, inputATs, inputBTs, inputPs);	
+			avewt = runAlgo.getAvewt();
+			avetat = runAlgo.getAvetat();
+			avewtDisplay.setText(Float.toString(avewt));
+			avetatDisplay.setText(Float.toString(avetat));
 		});
 		pane.setConstraints(FCFS, 0, 13);
+		
+		//PrioSched choosed
 	    Button PrioSched = new Button("PrioSched");
 	    PrioSched.setOnAction(e->{
-			try {
-				new PrioSched();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+	    	runAlgo = new Algorithm(2, inputATs, inputBTs, inputPs);
 		});
 		pane.setConstraints(PrioSched, 0, 14);
+		
+		//RR choosed
 	    Button RR = new Button("RR");
 	    RR.setOnAction(e->{
-			try {
-				new RR();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+	    	runAlgo = new Algorithm(3, inputATs, inputBTs, inputPs);
 		});
 		pane.setConstraints(RR, 0, 15);
+		
+		//SJF choosed
 	    Button SJF = new Button("SJF");
 	    SJF.setOnAction(e->{
-			try {
-				new SJF();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+	    	runAlgo = new Algorithm(4, inputATs, inputBTs, inputPs);
 		});
 		pane.setConstraints(SJF, 0, 16);
 		pane.getChildren().addAll(FCFS, PrioSched, RR, SJF);
 	    
-	    
-    	//Average waiting Time
-    	Label avewtLabel = new Label("Average waiting Time: ");
-			pane.setConstraints(avewtLabel, 1, 13, 2, 1);
-			TextField avewt = new TextField();
-			pane.setConstraints(avewt, 3, 13, 1, 1);
-	    //Average waiting Time
-	    Label avetatLabel = new Label("Average turn around time: ");
-			pane.setConstraints(avetatLabel, 1, 14, 2, 1);
-			TextField avetat = new TextField();
-			pane.setConstraints(avetat, 3, 14, 1, 1);	
-		pane.getChildren().addAll(avewtLabel, avewt, avetatLabel, avetat);
-			
+	
+		
+    	
 			
 		Scene scene = new Scene(pane, WIDTH, HEIGHT);
 		window.setScene(scene);

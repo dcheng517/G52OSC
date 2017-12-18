@@ -1,55 +1,92 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import javafx.scene.control.TextField;
 
 public class Algorithm {
-	
-	public Algorithm() {		
-		int choice=0;
+		private int AT, BT, P;
+		private static float avewt, avetat;
+		private Process newProcess;
+		private ArrayList<Process> pa; 
 		
-		while(choice!=-1) {
-			InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
-			BufferedReader br = new BufferedReader(isr); 
-			
-			boolean error = true;
-			ProcessingAlgorithms pa;
-			while(error) {
-				try {
-					System.out.println("Pick your choice:");
-					System.out.println("1. FCFS");
-					System.out.println("2. SJF");
-					System.out.println("3. Priority Scheduling");
-					System.out.println("4. RR");
-					System.out.print("Your choice (-1 to exit) :");
-					choice = Integer.parseInt(br.readLine()); // char to int
-					error = false;
-				}catch(Exception e) {
-					System.out.println("Input error");
+		public Algorithm(int algorithm, TextField[] ATs, TextField[] BTs, TextField[] Ps) {
+			pa = new ArrayList<Process>();
+			System.out.println("ATs length is "+ATs.length);
+			if(algorithm!=2) {
+				for(int i=0; i<ATs.length; i++) {					
+					if(!ATs[i].getText().isEmpty() && !BTs[i].getText().isEmpty()) {
+						this.AT = Integer.parseInt(ATs[i].getText());
+						this.BT = Integer.parseInt(BTs[i].getText());
+						
+						newProcess = new Process(AT, BT);
+						pa.add(newProcess); 
+					}
+				}
+			}else {
+				for(int i=0; i<ATs.length; i++) {
+					
+					if(!ATs[i].getText().isEmpty() && !BTs[i].getText().isEmpty() && !Ps[i].getText().isEmpty()) {
+							
+						this.AT = Integer.parseInt(ATs[i].getText());
+						this.BT = Integer.parseInt(BTs[i].getText());
+						this.P = Integer.parseInt(Ps[i].getText());	
+						
+						newProcess = new Process(AT, BT, P);
+						pa.add(newProcess); 
+					}
 				}
 			}
 			
-			
-			try {
-				switch(choice) {
-					case 1:
-						pa = new FCFS();
-						break;
-					case 2:
-						pa = new SJF();
-						break;
-					case 3:
-						pa = new PrioSched();
-						break;
-					case 4:
-						pa = new RR();
-						break;
-					case -1:
-						choice = -1;
-						break;
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
+			switch(algorithm) {
+				case 1:
+					try {
+						FCFS fcfs = new FCFS(pa);
+						avewt = fcfs.getAvewt(pa);
+						avetat = fcfs.getAvetat(pa);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				case 2:
+					try {
+						PrioSched priosched = new PrioSched(pa);
+						avewt = priosched.getAvewt(pa);
+						avetat = priosched.getAvetat(pa);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				case 3:
+					try {
+						RR rr = new RR(pa);
+						avewt = rr.getAvewt(pa);
+						avetat = rr.getAvetat(pa);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				case 4:
+					try {
+						SJF sjf = new SJF(pa);
+						avewt = sjf.getAvewt(pa);
+						avetat = sjf.getAvetat(pa);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
 			}
 		}
-	}
-	
+		
+		//returns average waiting time
+		public static float getAvewt() {
+			System.out.println("Going to display avewt onto GUI");
+			return avewt;
+		}
+		
+		//returns average turn around time
+		public static float getAvetat() {
+			System.out.println("Going to display avetat onto GUI");
+			return avetat;
+		}
 }
