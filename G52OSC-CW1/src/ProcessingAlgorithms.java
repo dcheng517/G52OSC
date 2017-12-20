@@ -16,7 +16,7 @@ public class ProcessingAlgorithms {
 	}
 	
 	//check completion status for all processes
-	public static boolean allNotDone(ArrayList<Process> pa) {
+	public static boolean notAllDone(ArrayList<Process> pa) {
 		for(Process p:pa) {
 			if(!p.completed) {
 				return true;	//if even one isn't done, return true
@@ -66,6 +66,7 @@ public class ProcessingAlgorithms {
 	public static float getAvewt() {
 		float avewt = 0;
 		for(Process p:pa) {
+			System.out.println(p.name+"waiting time is "+p.getWt());
 			avewt+=p.getWt();
 		}
 		avewt = avewt/pa.size();
@@ -79,6 +80,7 @@ public class ProcessingAlgorithms {
 	public static float getAvetat() {
 		float avetat = 0;
 		for(Process p:pa) {
+			System.out.println("p.getTat() is "+p.getTat());
 			avetat+=p.getTat();
 		}
 		avetat = avetat/pa.size();

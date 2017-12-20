@@ -76,7 +76,7 @@ public class Process implements Comparable<Process> {
 	
 	//returns turn around time
 	public int getTat() {
-		return endTime - startTime;
+		return endTime - startTime + 1;
 	}
 	
 	//returns waiting time
@@ -102,10 +102,11 @@ public class Process implements Comparable<Process> {
 	//checks for completion status of process
 	public boolean done(int ct) {
 		if(remBT==0) {
+			System.out.println(name+" done");
 			getTat();
 			getWt();
+			endTime = ct;
 			completed = true;
-			endTime = ct+1;
 			return true;
 		}		
 		return false;

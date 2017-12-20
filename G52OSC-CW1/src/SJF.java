@@ -23,29 +23,23 @@ public class SJF extends ProcessingAlgorithms{
 	
 	//shortest job first algorithm
 	public static void shortestJobFirst(ArrayList<Process> pa) {
-		SortedSet<Process>  ps = new TreeSet<>();	//sortedset for managing processes before processing
+		ArrayList<Process>  ps = new ArrayList<>();	//sortedset for managing processes before processing
 		
 		int currentTime = 0;						//current time (increments one unit time at a time)
+		while(notAllDone(pa)) {			
 		
-		while(allNotDone(pa)) {			
-			
 			//adding process to sortedset...
 			for(Process p:pa) {
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					ps.add(p);
-				}
-				Iterator<Process> psi = ps.iterator();
-				while(psi.hasNext()) {
-					System.out.print(psi.next().name+"|");
-				}
-				System.out.println("");
+					Collections.sort(ps);
+				}				
 			}
-			
 			//processing first element in ps, ie element of highest priority
 			if(!ps.isEmpty()) {
-				ps.first().processing();
-				if(ps.first().done(currentTime)) {
-					ps.remove(ps.first());
+				ps.get(0).processing();
+				if(ps.get(0).done(currentTime)) {
+					ps.remove(ps.get(0));
 				}
 			}	
 			currentTime++;

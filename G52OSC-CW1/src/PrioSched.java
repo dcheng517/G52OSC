@@ -25,7 +25,7 @@ public class PrioSched extends ProcessingAlgorithms{
 		SortedSet<Process> ps = new TreeSet<>();	//sortedset for managing processes before processing
 		int currentTime = 0;						//current time (increments one unit time at a time)		
 		
-		while(allNotDone(pa)) {
+		while(notAllDone(pa)) {
 			
 			//adding process to sortedset...
 			for(Process p:pa) {

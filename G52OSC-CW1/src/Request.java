@@ -16,8 +16,7 @@ public class Request{
 		public Request(int choice, TextField[] ATs, TextField[] BTs) throws Exception{
 			int AT=0, BT=0;
 			String at, bt, p;
-			try {
-			
+			try {			
 				for(int i=0; i<ATs.length; i++) {	
 					at = ATs[i].getText();
 					bt = BTs[i].getText();

@@ -24,11 +24,15 @@ public class FCFS extends ProcessingAlgorithms{
 		
 		int currentTime = 0;
 		boolean processDone;
+			while(notAllDone(pa))
 			for(Process p:pa) {
 				processDone = false;
+				printPA(pa);
 				while(!processDone) {
 					p.processing();
-					if(p.done(currentTime)) processDone = true;
+					System.out.println("ct is "+currentTime);
+					processDone = p.done(currentTime);
+					
 					currentTime+=1;
 				}
 			}

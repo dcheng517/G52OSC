@@ -34,7 +34,7 @@ public class RR extends ProcessingAlgorithms{
 		int currentTime=0;								//current time (increments one unit time at a time)
 		Process outStandingProcess = null;
 	
-		while(allNotDone(pa)) {
+		while(notAllDone(pa)) {
 		
 			//adding process to queue...
 			for(Process p:pa) {
