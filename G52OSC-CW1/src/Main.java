@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	
 	public static final int WIDTH = 500;
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 550;
 	public static final int N = 10;
 	private float avewt;
 	private float avetat;
@@ -28,7 +28,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage window) throws Exception {
-		window.setTitle("CPU Algorithms");
+		window.setTitle("Scheduling Algorithm Simulator");
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.CENTER);
 		pane.setHgap(10);
@@ -95,25 +95,25 @@ public class Main extends Application{
 	    
 	    
 	    //display calculated average waiting Time
-    		Label avewtLabel = new Label("Average waiting Time: ");
-			pane.setConstraints(avewtLabel, 1, 13, 2, 1);
+    		Label avewtLabel = new Label("Average waiting time: ");
+			pane.setConstraints(avewtLabel, 1, N+3, 2, 1);
 			TextField avewtDisplay = new TextField();
 			avewtDisplay.setEditable(false);
-			pane.setConstraints(avewtDisplay, 3, 13, 1, 1);
+			pane.setConstraints(avewtDisplay, 3, N+3, 1, 1);
 	    
 		//display calculated turn around Time
 			Label avetatLabel = new Label("Average turn around time: ");
-			pane.setConstraints(avetatLabel, 1, 14, 2, 1);
+			pane.setConstraints(avetatLabel, 1, N+4, 2, 1);
 			TextField avetatDisplay = new TextField();
 			avetatDisplay.setEditable(false);
-			pane.setConstraints(avetatDisplay, 3, 14, 1, 1);	
+			pane.setConstraints(avetatDisplay, 3, N+4, 1, 1);	
 		
 		//display cpu time	
 			Label cpuTimeLabel = new Label("Processing time in nanosec: ");
-			pane.setConstraints(cpuTimeLabel, 1, 15, 2, 1);
+			pane.setConstraints(cpuTimeLabel, 1, N+5, 2, 1);
 			TextField cpuTimeDisplay = new TextField();
 			avetatDisplay.setEditable(false);
-			pane.setConstraints(cpuTimeDisplay, 3, 15, 1, 1);	
+			pane.setConstraints(cpuTimeDisplay, 3, N+5, 1, 1);	
 		
 		
 		pane.getChildren().addAll(avewtLabel, avewtDisplay, avetatLabel, avetatDisplay, cpuTimeLabel, cpuTimeDisplay);
@@ -138,7 +138,7 @@ public class Main extends Application{
 					AlertBox.handle();
 				}
 			});
-			pane.setConstraints(FCFS, 0, 13);
+			pane.setConstraints(FCFS, 0, N+3);
 		
 		//SJF choosed
 		    Button SJF = new Button("SJF");
@@ -159,7 +159,7 @@ public class Main extends Application{
 					AlertBox.handle();
 				}
 			});
-			pane.setConstraints(SJF, 0, 14);	
+			pane.setConstraints(SJF, 0, N+4);	
 		
 		//PrioSched choosed
 		    Button PrioSched = new Button("PrioSched");
@@ -180,7 +180,7 @@ public class Main extends Application{
 					AlertBox.handle();
 				}
 			});
-		    pane.setConstraints(PrioSched, 0, 15);
+		    pane.setConstraints(PrioSched, 0, N+5);
 		
 		//RR choosed
 		    Button RR = new Button("RR");
@@ -204,15 +204,16 @@ public class Main extends Application{
 					}
 	    		}
 		    });
-			pane.setConstraints(RR, 0, 16);
+			pane.setConstraints(RR, 0, N+6);
 
 
 				
 		pane.getChildren().addAll(FCFS, PrioSched, RR, SJF);
 		Scene scene = new Scene(pane, WIDTH, HEIGHT);
 		window.setScene(scene);
+		window.setMinWidth(WIDTH);
+		window.setMinHeight(HEIGHT);
         window.setMaximized(false);
-        window.setResizable(false);
 		window.show();
 	}
 	
