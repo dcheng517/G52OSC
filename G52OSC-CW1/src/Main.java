@@ -1,55 +1,50 @@
 import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) throws Exception{	
+		final int EXIT = -1;
+		final List<Integer> validChoices = Arrays.asList(-1, 1, 2, 3, 4);
 		int choice=0;
+		Request req;
 		
-		while(choice!=-1) {
-			InputStreamReader isr = new InputStreamReader(System.in); // bytes to char
-			BufferedReader br = new BufferedReader(isr); 
-			
+		InputStreamReader isr = new InputStreamReader(System.in); 
+		BufferedReader br = new BufferedReader(isr);
+		
+		while(choice!=EXIT) {
+			//main menu
 			boolean error = true;
-			ProcessingAlgorithms pa;
+			//user choice for algorithm to simulate
+			System.out.println("************Scheduling Algorithm Simulator************");
+			System.out.println("Pick your choice:");
+			System.out.println("1. FCFS");
+			System.out.println("2. SJF");
+			System.out.println("3. Priority Scheduling");
+			System.out.println("4. RR");
+			System.out.println("******************************************************");
 			while(error) {
-				try {
-					System.out.println("Pick your choice:");
-					System.out.println("1. FCFS");
-					System.out.println("2. SJF");
-					System.out.println("3. Priority Scheduling");
-					System.out.println("4. RR");
+				try {		
 					System.out.print("Your choice (-1 to exit) :");
 					choice = Integer.parseInt(br.readLine()); // char to int
-					error = false;
+					if(validChoices.contains(choice)) {
+						error = false;
+					}else {
+						throw new Exception();
+					}
 				}catch(Exception e) {
-					System.out.println("Input error");
+					System.out.println("Invalid input");
 				}
 			}
-			
-			
-			try {
-				switch(choice) {
-					case 1:
-						pa = new FCFS();
-						break;
-					case 2:
-						pa = new SJF();
-						break;
-					case 3:
-						pa = new PrioSched();
-						break;
-					case 4:
-						pa = new RR();
-						break;
-					case -1:
-						choice = -1;
-						break;
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
+			if(choice!=EXIT) {
+				req = new Request(choice);
+			}		
+		}	
+			System.out.println("\n********************End of Program********************");
 	}
-	
 }
+

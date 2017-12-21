@@ -9,14 +9,13 @@ public class Process implements Comparable<Process> {
 	private int remBT;				//remaining burst time
 	private int startTime;			//time process starts
 	private int endTime;			//time process ends
-	private static int i=1;			//index of processes
 	private int option=0;
 	public boolean completed;
 	public int tempProcessingTime = 1;
 	
 	//constructor1
 	//sets arrival time, burst time, remaining burst time, name, and start time of process
-	public Process(int AT, int BT) {
+	public Process(int i, int AT, int BT) {
 		
 		this.AT = AT;
 		this.BT = BT;
@@ -24,14 +23,12 @@ public class Process implements Comparable<Process> {
 		name = "P"+i;
 		startTime = AT;
 		completed = false;
-		
 		option = 0;		//compareTo() compares with remaining burst time
-		i++;
 	}
 	
 	//constructor2
-	//sets arrival time, burst time,, priority remaining burst time, name, and start time of process
-	public Process(int AT, int BT, int P) {
+	//sets arrival time, burst time, priority, remaining burst time, name, and start time of process
+	public Process(int i, int AT, int BT, int P) {
 		
 		this.AT = AT;
 		this.BT = BT;
@@ -41,7 +38,7 @@ public class Process implements Comparable<Process> {
 		startTime = AT;
 		completed = false;
 		option = 1;			//compareTo() compares with priority
-		i++;
+		
 	}
 	
 	
@@ -50,7 +47,7 @@ public class Process implements Comparable<Process> {
 	public void printInfo() {
 		System.out.print(name+":");
 		System.out.println("AT:"+AT+"|BT:"+BT+"|rem"+"BT:"+remBT);
-		//System.out.println("completed: "+completed);
+		System.out.println("completed: "+completed);
 		System.out.println("startTime: "+startTime+" endtime: "+endTime);
 	}
 	
@@ -76,7 +73,7 @@ public class Process implements Comparable<Process> {
 	
 	//returns turn around time
 	public int getTat() {
-		return endTime - startTime;
+		return endTime - startTime + 1;
 	}
 	
 	//returns waiting time
@@ -94,18 +91,21 @@ public class Process implements Comparable<Process> {
 	
 	//processing...
 	public void processing() {	
-		//System.out.println(name+" is processing...");
-		remBT--;				//remaining burst time reduced
+		System.out.println(name+" is processing...");
+		if(remBT>0) {
+			remBT--;				//remaining burst time reduced
+		}
 		tempProcessingTime++;	//temporary processing time (useful only for round robin algo
 	}
 	
 	//checks for completion status of process
 	public boolean done(int ct) {
 		if(remBT==0) {
+			System.out.println(name+" done");
 			getTat();
 			getWt();
+			endTime = ct;
 			completed = true;
-			endTime = ct+1;
 			return true;
 		}		
 		return false;
@@ -113,12 +113,12 @@ public class Process implements Comparable<Process> {
 	
 	@Override
 	public int compareTo(Process p) {
-		if(option==1) {
-			int comparePriority = ((Process) p).getP();
-			return this.getP() - comparePriority;
-		}else {
+		if(option==0) {
 			int compareRemBT = ((Process) p).getRemBT();
 			return this.getRemBT() - compareRemBT;
+		}else{
+			int comparePriority = ((Process) p).getP();
+			return this.getP() - comparePriority;
 		}
 	}
 }

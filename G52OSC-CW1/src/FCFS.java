@@ -1,37 +1,49 @@
-import java.io.*;
-import java.lang.management.ManagementFactory;
-import com.sun.management.OperatingSystemMXBean;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class FCFS extends ProcessingAlgorithms{
-	
-	static Process[] pa;									//array to store all processes
-	public FCFS() throws Exception{
-		pa = getProcesses();
+public class FCFS extends SchedulingAlgorithms{
+	private ArrayList<Process> pa;
+	public FCFS(ArrayList<Process> a) throws Exception{
+		this.pa = a;
 		
 		long cputimeBefore = System.currentTimeMillis();
 		FirstComeFirstServe(pa);
 		long cputimeAfter = System.currentTimeMillis();
-		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-
 		printResult(pa);
+		printCPUTime(cputimeBefore, cputimeAfter);		
 		printAvetat(pa);
 		printAvewt(pa);
 		printCPUInfo();
 	}
 	
-	public static void FirstComeFirstServe(Process[] pa) {
+	public static void FirstComeFirstServe(ArrayList<Process> a) {
+		Queue<Process> Q = new LinkedList<Process>();
+		
 		int currentTime = 0;
-		boolean processDone;
-			for(Process p:pa) {
-				processDone = false;
-				while(!processDone) {
-					p.processing();
-					if(p.done(currentTime)) processDone = true;
-					currentTime+=1;
-				}
+		while(notAllDone(a)) {
+			System.out.println("Current time is"+currentTime);
+			
+			//adding process to queue at currentTime...
+			for(Process p:a) {
+				if(p.arrivedAt(currentTime) && !p.completed) {
+					Q.add(p);
+				}				
 			}
-	}
-	
+			
+			for(Process q:Q) {
+				q.printInfo();
+			}
+			
+			//processing first element in ps, ie element of highest priority
+			if(!Q.isEmpty()) {
+				Q.peek().processing();
+				if(Q.peek().done(currentTime)) {	//if process is done after processing
+					Q.remove();
+				}
+			}	
+			currentTime++;
+		}
+		printPA(a);
+	}	
 }
