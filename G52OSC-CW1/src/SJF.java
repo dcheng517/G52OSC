@@ -9,11 +9,10 @@ public class SJF extends SchedulingAlgorithms{
 		long cputimeBefore = System.currentTimeMillis();
 		shortestJobFirst(pa);
 		long cputimeAfter = System.currentTimeMillis();
-		printPA(pa);
 		printResult(pa);
-		printCPUTime(cputimeBefore, cputimeAfter);		
-		printAvetat(pa);
-		printAvewt(pa);
+		printCPUTime(cputimeBefore, cputimeAfter);	
+		printAveTat(pa);
+		printAveWt(pa);
 		printCPUInfo();
 	}
 	
@@ -40,20 +39,5 @@ public class SJF extends SchedulingAlgorithms{
 			}	
 			currentTime++;
 		}
-	}
-	
-	//Prints queue
-	public static void printPS(ArrayList<Process> a, int ct) {
-		Iterator<Process> pai = a.iterator();
-		System.out.print(ct+":\t");
-		if(pai.hasNext()) {
-			while(pai.hasNext()) {
-				System.out.print(pai.next().name+"|");
-			}
-			System.out.println("");
-		}else {
-			System.out.println("Queue is empty");
-		}
-	}
-	
+	}	
 }

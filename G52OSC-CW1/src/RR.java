@@ -11,12 +11,10 @@ public class RR extends SchedulingAlgorithms{
 		long cputimeBefore = System.currentTimeMillis();
 		roundRobin(a, TQ);
 		long cputimeAfter = System.currentTimeMillis();
-		long cpuTimeDifference = cputimeAfter - cputimeBefore;
-
-		System.out.println("CPU Time: " + cpuTimeDifference);
-		printResult(a);
-		printAvetat(a);
-		printAvewt(a);
+		printResult(pa);
+		printCPUTime(cputimeBefore, cputimeAfter);
+		printAveTat(pa);
+		printAveWt(pa);
 		printCPUInfo();
 	}
 
@@ -32,8 +30,7 @@ public class RR extends SchedulingAlgorithms{
 		while(notAllDone(a)) {
 		
 			//adding process to queue...
-			for(Process p:a) {
-				//System.out.println("*This process is: "+p.name); 
+			for(Process p:a) { 
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					pq.add(p);	
 				}

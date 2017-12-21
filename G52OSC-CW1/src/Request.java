@@ -33,8 +33,7 @@ public class Request {
 			}catch(Exception e) {
 				System.out.println("Invalid input");
 			}
-		}			
-		
+		}	
 		
 		System.out.println("Enter information for each processes");
 			
@@ -106,7 +105,6 @@ public class Request {
 							BT = Integer.parseInt(br.readLine()); // char to int
 							if(BT<0) {throw new Exception();}
 						Process newProcess = new Process(i, AT, BT);
-						System.out.println(newProcess.name+" is created");
 						pa.add(newProcess);
 					} catch (Exception e) {
 						System.out.println("Invalid input");

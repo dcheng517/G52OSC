@@ -11,8 +11,8 @@ public class PrioSched extends SchedulingAlgorithms{
 		long cputimeAfter = System.currentTimeMillis();
 		printResult(pa);
 		printCPUTime(cputimeBefore, cputimeAfter);		
-		printAvetat(pa);
-		printAvewt(pa);
+		printAveTat(pa);
+		printAveWt(pa);
 		printCPUInfo();
 	}
 	
@@ -34,11 +34,6 @@ public class PrioSched extends SchedulingAlgorithms{
 					Collections.sort(pa);
 				}
 			}
-			
-			for(Process p:pa) {
-				p.printInfo();
-			}
-			
 			//processing first element in ps, ie element of highest priority
 			if(!pa.isEmpty()) {
 				pa.get(0).processing();

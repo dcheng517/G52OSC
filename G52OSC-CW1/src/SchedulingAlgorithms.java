@@ -16,6 +16,21 @@ public class SchedulingAlgorithms {
 			p.printInfo();
 		}
 	}
+	
+	//Prints queue
+	public static void printPS(ArrayList<Process> a, int ct) {
+		Iterator<Process> pai = a.iterator();
+		System.out.print(ct+":\t");
+		if(pai.hasNext()) {
+			while(pai.hasNext()) {
+				System.out.print(pai.next().name+"|");
+			}
+			System.out.println("");
+		}else {
+			System.out.println("Queue is empty");
+		}
+	}
+		
 	/*
 	public static void printPQ() {
 		System.out.println("*Printing processes queue");
@@ -83,14 +98,12 @@ public class SchedulingAlgorithms {
 		}
 	}
 	
-	
-	//prints averate turn around time
-	public static void printAvetat(ArrayList<Process> a) {
+	//prints average waiting time
+	public static void printAveWt(ArrayList<Process> a) {
 		float avewt = 0;
 		int n = a.size();
 		if(n>0) {
 			for(Process p:a) {
-				System.out.println(p.name+"waiting time is "+p.getWt());
 				avewt+=p.getWt();
 			}
 			avewt = avewt/n;
@@ -98,13 +111,13 @@ public class SchedulingAlgorithms {
 		}	
 	}
 	
-	//prints average waiting time
-	public static void printAvewt(ArrayList<Process> a) {
+
+	//prints averate turn around time
+	public static void printAveTat(ArrayList<Process> a) {
 		float avetat = 0;
 		int n = a.size();
 		if(n>0) {
 			for(Process p:a) {
-				System.out.println("p.getTat() is "+p.getTat());
 				avetat+=p.getTat();
 			}
 			avetat = avetat/n;
@@ -122,6 +135,6 @@ public class SchedulingAlgorithms {
 	public static void printCPUInfo() {
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		System.out.println(bean.getProcessCpuLoad());
-		System.out.println("\n" + bean.getProcessCpuTime()+"nanoseconds");
+		System.out.println(bean.getProcessCpuTime()+"nanoseconds\n\n");
 	}
-	}
+}

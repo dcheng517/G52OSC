@@ -11,9 +11,9 @@ public class FCFS extends SchedulingAlgorithms{
 		FirstComeFirstServe(pa);
 		long cputimeAfter = System.currentTimeMillis();
 		printResult(pa);
-		printCPUTime(cputimeBefore, cputimeAfter);		
-		printAvetat(pa);
-		printAvewt(pa);
+		printCPUTime(cputimeBefore, cputimeAfter);	
+		printAveTat(pa);
+		printAveWt(pa);
 		printCPUInfo();
 	}
 	
@@ -22,7 +22,6 @@ public class FCFS extends SchedulingAlgorithms{
 		
 		int currentTime = 0;
 		while(notAllDone(a)) {
-			System.out.println("Current time is"+currentTime);
 			
 			//adding process to queue at currentTime...
 			for(Process p:a) {
@@ -30,11 +29,7 @@ public class FCFS extends SchedulingAlgorithms{
 					Q.add(p);
 				}				
 			}
-			
-			for(Process q:Q) {
-				q.printInfo();
-			}
-			
+						
 			//processing first element in ps, ie element of highest priority
 			if(!Q.isEmpty()) {
 				Q.peek().processing();
@@ -44,6 +39,5 @@ public class FCFS extends SchedulingAlgorithms{
 			}	
 			currentTime++;
 		}
-		printPA(a);
 	}	
 }

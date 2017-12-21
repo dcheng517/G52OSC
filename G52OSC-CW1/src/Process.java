@@ -90,8 +90,7 @@ public class Process implements Comparable<Process> {
 	}
 	
 	//processing...
-	public void processing() {	
-		System.out.println(name+" is processing...");
+	public void processing() {
 		if(remBT>0) {
 			remBT--;				//remaining burst time reduced
 		}
@@ -101,7 +100,6 @@ public class Process implements Comparable<Process> {
 	//checks for completion status of process
 	public boolean done(int ct) {
 		if(remBT==0) {
-			System.out.println(name+" done");
 			getTat();
 			getWt();
 			endTime = ct;
