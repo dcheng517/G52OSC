@@ -41,11 +41,11 @@ average turnaround time: (28+4+11+17+4)/5 = 12.8
 
 PrioSched
 Process	Burst Time	Priority	Arrival	
-1		10			3			0	
-2		1			1			0	
-3		2			4			0	
-4		1			5			0	
-5		5			2			0	
+1	10		3		0	
+2	1		1		0	
+3	2		4		0	
+4	1		5		0	
+5	5		2		0	
 average waiting time: (6+0+16+18+1)/5 = 8.2
 average turnaround time: (1+6+16+18+19)/5 = 12
 

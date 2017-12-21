@@ -65,13 +65,15 @@ public class ProcessingAlgorithms {
 	//returns average waiting time
 	public static float getAvewt() {
 		float avewt = 0;
-		for(Process p:pa) {
-			System.out.println(p.name+"waiting time is "+p.getWt());
-			avewt+=p.getWt();
-		}
-		avewt = avewt/pa.size();
-		System.out.println("Average waiting time: "+avewt);
-		
+		int n = pa.size();
+		if(n>0) {
+			for(Process p:pa) {
+				System.out.println(p.name+"waiting time is "+p.getWt());
+				avewt+=p.getWt();
+			}
+			avewt = avewt/n;
+			System.out.println("Average waiting time: "+avewt);
+		}		
 		return avewt;
 	}
 	
@@ -79,13 +81,15 @@ public class ProcessingAlgorithms {
 	//returns average turn around time
 	public static float getAvetat() {
 		float avetat = 0;
-		for(Process p:pa) {
-			System.out.println("p.getTat() is "+p.getTat());
-			avetat+=p.getTat();
+		int n = pa.size();
+		if(n>0) {
+			for(Process p:pa) {
+				System.out.println("p.getTat() is "+p.getTat());
+				avetat+=p.getTat();
+			}
+			avetat = avetat/pa.size();
+			System.out.println("Average turn around time: "+avetat);
 		}
-		avetat = avetat/pa.size();
-		System.out.println("Average turn around time: "+avetat);
-		
 		return avetat;
 	}
 	

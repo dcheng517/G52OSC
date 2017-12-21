@@ -9,14 +9,13 @@ public class Process implements Comparable<Process> {
 	private int remBT;				//remaining burst time
 	private int startTime;			//time process starts
 	private int endTime;			//time process ends
-	private static int i=1;			//index of processes
 	private int option=0;
 	public boolean completed;
 	public int tempProcessingTime = 1;
 	
 	//constructor1
 	//sets arrival time, burst time, remaining burst time, name, and start time of process
-	public Process(int AT, int BT) {
+	public Process(int i,int AT, int BT) {
 		
 		this.AT = AT;
 		this.BT = BT;
@@ -26,12 +25,11 @@ public class Process implements Comparable<Process> {
 		completed = false;
 		
 		option = 0;		//compareTo() compares with remaining burst time
-		i++;
 	}
 	
 	//constructor2
 	//sets arrival time, burst time,, priority remaining burst time, name, and start time of process
-	public Process(int AT, int BT, int P) {
+	public Process(int i, int AT, int BT, int P) {
 		
 		this.AT = AT;
 		this.BT = BT;
@@ -94,8 +92,10 @@ public class Process implements Comparable<Process> {
 	
 	//processing...
 	public void processing() {	
-		//System.out.println(name+" is processing...");
-		remBT--;				//remaining burst time reduced
+		System.out.println(name+" is processing...");
+		if(remBT>0) {
+			remBT--;				//remaining burst time reduced
+		}
 		tempProcessingTime++;	//temporary processing time (useful only for round robin algo
 	}
 	

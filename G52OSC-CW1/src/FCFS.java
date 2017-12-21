@@ -1,6 +1,9 @@
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import com.sun.management.OperatingSystemMXBean;
 
@@ -22,20 +25,31 @@ public class FCFS extends ProcessingAlgorithms{
 	
 	public static void FirstComeFirstServe(ArrayList<Process> a) {
 		
+		Queue<Process> Q = new LinkedList<Process>();
+		
 		int currentTime = 0;
-		boolean processDone;
-			while(notAllDone(pa))
+		while(notAllDone(pa)) {
+			System.out.println("Current time is"+currentTime);
+			//adding process to queue at currentTime...
 			for(Process p:pa) {
-				processDone = false;
-				printPA(pa);
-				while(!processDone) {
-					p.processing();
-					System.out.println("ct is "+currentTime);
-					processDone = p.done(currentTime);
-					
-					currentTime+=1;
-				}
+				if(p.arrivedAt(currentTime) && !p.completed) {
+					Q.add(p);
+				}				
 			}
-	}
-	
+			
+			for(Process q:Q) {
+				q.printInfo();
+			}
+			
+			//processing first element in ps, ie element of highest priority
+			if(!Q.isEmpty()) {
+				Q.peek().processing();
+				if(Q.peek().done(currentTime)) {	//if process is done after processing
+					Q.remove();
+				}
+			}	
+			currentTime++;
+		}
+		printPA(pa);
+	}	
 }

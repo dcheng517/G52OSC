@@ -57,6 +57,18 @@ public class Main extends Application{
 	    Label[] Ps = new Label[N];
 	    TextField[] inputPs = new TextField[N];
 	    
+	    //add more process slots
+	    Button addProcess = new Button("Add more process slots");
+	    addProcess.setOnAction(e->{
+			try {
+				
+			}catch(Exception userInputError) {
+				userInputError.printStackTrace();
+				AlertBox.handle();
+			}
+		});
+		pane.setConstraints(addProcess, 0, 13);
+	    
 	    //display user input section
 	    for(int i=0; i<N; i++) {
 	    	

@@ -24,8 +24,10 @@ public class Request{
 						AT = Integer.parseInt(ATs[i].getText());
 						BT = Integer.parseInt(BTs[i].getText());
 						
-						newProcess = new Process(AT, BT);
-						pa.add(newProcess); 
+						if(BT>0) {
+							newProcess = new Process(i, AT, BT);
+							pa.add(newProcess); 							
+						}
 					}
 				}
 				runAlgorithm(choice);
@@ -34,7 +36,6 @@ public class Request{
 				e.printStackTrace();
 				AlertBox.handle();
 			}
-			
 		}
 		
 		//constructor 2, for PrioSched
@@ -44,26 +45,20 @@ public class Request{
 			try {
 				
 				for(int i=0; i<ATs.length; i++) {		
-
 					at = ATs[i].getText();
 					bt = BTs[i].getText();
 					p = Ps[i].getText();
-					
 					if(!endOfUserInput(at, bt, p)) {
-
-						System.out.println("i: "+i);
 						AT = Integer.parseInt(ATs[i].getText());
-						System.out.println("AT is "+AT);
 						BT = Integer.parseInt(BTs[i].getText());
-						System.out.println("BT is "+BT);
 						P = Integer.parseInt(Ps[i].getText());
-						System.out.println("P is "+P);
 						
-						newProcess = new Process(AT, BT, P);
-						pa.add(newProcess); 
+						if(BT>0) {
+							newProcess = new Process(i, AT, BT, P);
+							pa.add(newProcess); 							
+						}
 					}
-				}
-				
+				}				
 				runAlgorithm(3);
 				pa.clear();
 			}catch(Exception e1) {
@@ -85,8 +80,10 @@ public class Request{
 						AT = Integer.parseInt(ATs[i].getText());
 						BT = Integer.parseInt(BTs[i].getText());
 						
-						newProcess = new Process(AT, BT);
-						pa.add(newProcess); 
+						if(BT>0) {
+							newProcess = new Process(i, AT, BT);
+							pa.add(newProcess); 							
+						}
 					}
 				}
 				runAlgorithm(4);
