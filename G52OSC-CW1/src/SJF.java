@@ -13,6 +13,7 @@ public class SJF extends ProcessingAlgorithms{
 			long cputimeBefore = System.nanoTime();
 			shortestJobFirst(pa);
 			long cputimeAfter = System.nanoTime();
+			printResult(pa);
 			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {

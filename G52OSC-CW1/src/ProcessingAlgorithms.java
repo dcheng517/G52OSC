@@ -31,7 +31,7 @@ public class ProcessingAlgorithms {
 		switch(option) {
 			
 			//1 for result without priority
-			case 1: {
+			case 0: {
 				System.out.print(" ________________________________________________________________________________");
 				System.out.println("\n|PROCESS\t|ARRIVAL-TIME\t|BURST-TIME\t|WAITING-TIME\t|TURN-AROUND-TIME|");
 				for(Process p:pa)
@@ -44,7 +44,7 @@ public class ProcessingAlgorithms {
 			break;
 			
 			//2 for result with priority
-			case 2: {
+			case 1: {
 				System.out.print(" ________________________________________________________________________________________________");
 				System.out.println("\n|PROCESS\t|ARRIVAL-TIME\t|BURST-TIME\t|PRIORITY\t|WAITING-TIME\t|TURN-AROUND-TIME|");
 				for(Process p:pa)
@@ -68,7 +68,6 @@ public class ProcessingAlgorithms {
 		int n = pa.size();
 		if(n>0) {
 			for(Process p:pa) {
-				System.out.println(p.name+"waiting time is "+p.getWt());
 				avewt+=p.getWt();
 			}
 			avewt = avewt/n;
@@ -84,7 +83,6 @@ public class ProcessingAlgorithms {
 		int n = pa.size();
 		if(n>0) {
 			for(Process p:pa) {
-				System.out.println("p.getTat() is "+p.getTat());
 				avetat+=p.getTat();
 			}
 			avetat = avetat/pa.size();

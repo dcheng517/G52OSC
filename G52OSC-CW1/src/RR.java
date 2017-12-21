@@ -17,8 +17,8 @@ public class RR extends ProcessingAlgorithms{
 			long cputimeBefore = System.nanoTime();
 			roundRobin(pa, TQ);
 			long cputimeAfter = System.nanoTime();
-			calcCPUTime(cputimeBefore, cputimeAfter);
 			printResult(pa);
+			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {
 			AlertBox.handle();
@@ -38,7 +38,6 @@ public class RR extends ProcessingAlgorithms{
 		
 			//adding process to queue...
 			for(Process p:pa) {
-				//System.out.println("*This process is: "+p.name); 
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					pq.add(p);	
 				}

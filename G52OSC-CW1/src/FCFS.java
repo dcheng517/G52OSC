@@ -15,6 +15,7 @@ public class FCFS extends ProcessingAlgorithms{
 			long cputimeBefore = System.nanoTime();
 			FirstComeFirstServe(pa);
 			long cputimeAfter = System.nanoTime();
+			printResult(pa);
 			calcCPUTime(cputimeBefore, cputimeAfter);
 			printCPUInfo();
 		}catch(IndexOutOfBoundsException e) {
@@ -29,16 +30,11 @@ public class FCFS extends ProcessingAlgorithms{
 		
 		int currentTime = 0;
 		while(notAllDone(pa)) {
-			System.out.println("Current time is"+currentTime);
 			//adding process to queue at currentTime...
 			for(Process p:pa) {
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					Q.add(p);
 				}				
-			}
-			
-			for(Process q:Q) {
-				q.printInfo();
 			}
 			
 			//processing first element in ps, ie element of highest priority
@@ -50,6 +46,5 @@ public class FCFS extends ProcessingAlgorithms{
 			}	
 			currentTime++;
 		}
-		printPA(pa);
 	}	
 }

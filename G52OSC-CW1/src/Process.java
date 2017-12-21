@@ -48,7 +48,7 @@ public class Process implements Comparable<Process> {
 	public void printInfo() {
 		System.out.print(name+":");
 		System.out.println("AT:"+AT+"|BT:"+BT+"|rem"+"BT:"+remBT);
-		//System.out.println("completed: "+completed);
+		System.out.println("completed: "+completed);
 		System.out.println("startTime: "+startTime+" endtime: "+endTime);
 	}
 	
@@ -92,7 +92,6 @@ public class Process implements Comparable<Process> {
 	
 	//processing...
 	public void processing() {	
-		System.out.println(name+" is processing...");
 		if(remBT>0) {
 			remBT--;				//remaining burst time reduced
 		}
@@ -102,7 +101,6 @@ public class Process implements Comparable<Process> {
 	//checks for completion status of process
 	public boolean done(int ct) {
 		if(remBT==0) {
-			System.out.println(name+" done");
 			getTat();
 			getWt();
 			endTime = ct;
@@ -114,12 +112,12 @@ public class Process implements Comparable<Process> {
 	
 	@Override
 	public int compareTo(Process p) {
-		if(option==1) {
-			int comparePriority = ((Process) p).getP();
-			return this.getP() - comparePriority;
-		}else {
+		if(option==0) {
 			int compareRemBT = ((Process) p).getRemBT();
 			return this.getRemBT() - compareRemBT;
+		}else{
+			int comparePriority = ((Process) p).getP();
+			return this.getP() - comparePriority;
 		}
 	}
 }
