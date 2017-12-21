@@ -24,7 +24,7 @@ public class SJF extends SchedulingAlgorithms{
 		
 		int currentTime = 0;						//current time (increments one unit time at a time)
 		while(notAllDone(a)) {		
-			//adding process to sortedset...
+			//adding process to array
 			for(Process p:a) {
 				if(p.arrivedAt(currentTime) && !p.completed) {
 					pa.add(p);

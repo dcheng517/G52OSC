@@ -21,27 +21,29 @@ public class PrioSched extends SchedulingAlgorithms{
 	public static void priorityScheduling(ArrayList<Process> a) {
 		
 		//sortedset for managing processes before processing
-		SortedSet<Process> ps = new TreeSet<>();	
+		ArrayList<Process> pa = new ArrayList<>();	//sortedset for managing processes before processing
 		
 		//current time (increments one unit time at a time)
 		int currentTime = 0;					
 		
 		while(notAllDone(a)) {
-			
-			//adding process to sortedset...
+			//adding process to array
 			for(Process p:a) {
 				if(p.arrivedAt(currentTime) && !p.completed) {
-					ps.add(p);
+					pa.add(p);
+					Collections.sort(pa);
 				}
 			}
 			
-			//super.printPS();
+			for(Process p:pa) {
+				p.printInfo();
+			}
 			
 			//processing first element in ps, ie element of highest priority
-			if(!ps.isEmpty()) {
-				ps.first().processing();
-				if(ps.first().done(currentTime)) {
-					ps.remove(ps.first());
+			if(!pa.isEmpty()) {
+				pa.get(0).processing();
+				if(pa.get(0).done(currentTime)) {
+					pa.remove(pa.get(0));
 				}
 			}	
 			currentTime++;

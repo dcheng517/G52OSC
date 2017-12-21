@@ -47,13 +47,13 @@ public class Request {
 						try {
 							System.out.print(" Arrival time: ");
 								AT = Integer.parseInt(br.readLine());
-								if(AT<0) {error = false;} else {throw new Exception();}
+								if(AT<0) {throw new Exception();}
 							System.out.print(" Burst time: ");
 								BT = Integer.parseInt(br.readLine()); // char to int
-								if(BT<0) {error = false;} else {throw new Exception();}
+								if(BT<0) {throw new Exception();}
 							System.out.print(" Priority ");
 								P = Integer.parseInt(br.readLine()); // char to int	
-								if(P<0) {error = false;} else {throw new Exception();}
+								if(P<0) {throw new Exception();}
 						 		
 							Process newProcess = new Process(i, AT, BT, P);
 							pa.add(newProcess);
@@ -71,10 +71,10 @@ public class Request {
 					try {
 						System.out.print(" Arrival time: ");
 							AT = Integer.parseInt(br.readLine());
-							if(AT<0) {error = false;} else {throw new Exception();}
+							if(AT<0) {throw new Exception();}
 						System.out.print(" Burst time: ");
 							BT = Integer.parseInt(br.readLine()); // char to int
-							if(BT<0) {error = false;} else {throw new Exception();}
+							if(BT<0) {throw new Exception();}
 						Process newProcess = new Process(i, AT, BT);
 						pa.add(newProcess);
 					} catch (Exception e) {
@@ -84,7 +84,7 @@ public class Request {
 				try {
 					System.out.print(" Time Quantum: ");
 					TQ = Integer.parseInt(br.readLine());
-					if(TQ<0) {error = false;} else {throw new Exception();}
+					if(TQ<0) {throw new Exception();}
 				} catch (Exception e) {
 					System.out.println("Invalid input");
 				}
@@ -101,10 +101,10 @@ public class Request {
 					try {
 						System.out.print(" Arrival time: ");
 							AT = Integer.parseInt(br.readLine()); // char to int
-							if(AT<0) {error = false;} else {throw new Exception();}
+							if(AT<0) {throw new Exception();}
 						System.out.print(" Burst time: ");
 							BT = Integer.parseInt(br.readLine()); // char to int
-							if(BT<0) {error = false;} else {throw new Exception();}
+							if(BT<0) {throw new Exception();}
 						Process newProcess = new Process(i, AT, BT);
 						System.out.println(newProcess.name+" is created");
 						pa.add(newProcess);
