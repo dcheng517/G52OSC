@@ -5,13 +5,13 @@ import java.lang.management.ManagementFactory;
 import java.util.*;
 import com.sun.management.OperatingSystemMXBean;
 
-public class PrioSched extends ProcessingAlgorithms{
-	public PrioSched(ArrayList<Process> a) throws Exception{
-		
+public class SJF extends ProcessingAlgorithms{
+	
+	public SJF(ArrayList<Process> a) throws Exception{
 		pa = a;
 		try {
 			long cputimeBefore = System.nanoTime();
-			priorityScheduling(pa);
+			shortestJobFirst(pa);
 			long cputimeAfter = System.nanoTime();
 			printResult(pa);
 			calcCPUTime(cputimeBefore, cputimeAfter);
@@ -21,8 +21,9 @@ public class PrioSched extends ProcessingAlgorithms{
 		}
 	}
 	
-	public static void priorityScheduling(ArrayList<Process> pa) {
-			
+	
+	//shortest job first algorithm
+	public static void shortestJobFirst(ArrayList<Process> pa) {
 		ArrayList<Process>  ps = new ArrayList<>();	//sortedset for managing processes before processing
 		
 		int currentTime = 0;						//current time (increments one unit time at a time)
